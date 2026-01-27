@@ -2,124 +2,203 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>מידע לפיקוד - LSPD</title>
   <link rel="icon" href="LSPD.png" type="image/png">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="design.css">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e1b35;
+      --surface: #15243f;
+      --text: #f1f5f9;
+      --text-dim: #c3d4e9;
+      --primary: #5aafff;
+      --primary-glow: #5aafff44;
+      --accent: #ff5e5e;
+      --border: #2b3d5c;
+      --glass: rgba(21,36,63,0.65);
+      --blur: blur(12px);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Heebo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; line-height:1.6; direction:rtl; touch-action:manipulation; font-size:16px; }
+
+    header { position:fixed; top:0; left:0; right:0; z-index:1000; background:linear-gradient(180deg,#1c2f52 0%,#13203a 100%); border-bottom:1px solid rgba(90,175,255,0.22); box-shadow:0 4px 20px rgba(0,0,0,0.5); backdrop-filter:blur(12px); }
+    .nav-container { max-width:1380px; margin:0 auto; padding:1rem 1.8rem; display:flex; justify-content:space-between; align-items:center; }
+    .logo-area { display:flex; align-items:center; gap:1rem; }
+    .logo-area img { width:46px; filter:drop-shadow(0 0 8px #5aafff44); }
+    .logo-area span { font-size:1.7rem; font-weight:700; background:linear-gradient(90deg,#a3d4ff,#5aafff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    #userGreeting { font-size:1rem; color:#c3d4e9; margin-right:0.8rem; font-weight:400; white-space:nowrap; }
+    nav ul { display:flex; align-items:center; gap:1.9rem; list-style:none; }
+    nav a { color:#c3d4e9; text-decoration:none; font-weight:500; position:relative; transition:all 0.28s ease; }
+    nav a:hover { color:white; text-shadow:0 0 12px #5aafff44; }
+    nav a::after { content:''; position:absolute; width:0; height:2px; bottom:-6px; right:0; background:#5aafff; transition:width 0.4s ease; box-shadow:0 0 10px #5aafff44; }
+    nav a:hover::after { width:100%; }
+    .auth-btn { padding:0.6rem 1.4rem; border-radius:6px; font-weight:600; cursor:pointer; transition:all 0.3s ease; }
+    #logoutBtn { background:transparent; border:2px solid #ff5e5e; color:#ff5e5e; }
+    #logoutBtn:hover { background:#ff5e5e; color:white; box-shadow:0 0 12px #ff5e5e44; }
+    .burger { display:none; font-size:1.9rem; color:#c3d4e9; cursor:pointer; }
+
+    @media (max-width: 880px) {
+      .burger { display:block; }
+      nav ul { display:none; flex-direction:column; position:absolute; top:100%; right:0; background:#15243f; width:100%; padding:1.6rem; border-top:1px solid #2b3d5c; }
+      nav ul.active { display:flex; }
+      .nav-container { padding:1rem 1.2rem; }
+      .logo-area span { font-size:1.4rem; }
+      #userGreeting { font-size:0.9rem; margin-right:0.5rem; }
+      .auth-btn { padding:0.5rem 1rem; font-size:0.95rem; }
+    }
+
+    @media (max-width: 480px) {
+      .logo-area img { width:38px; }
+      .logo-area span { font-size:1.3rem; }
+      #userGreeting { font-size:0.85rem; }
+      h1 { font-size:2rem; }
+      .complaint-card { padding:1.2rem; margin-bottom:1.2rem; }
+      .card-header strong { font-size:1.1rem; }
+      .card-body p { font-size:0.95rem; }
+      .delete-btn { padding:0.4rem 0.8rem; font-size:0.9rem; }
+    }
+
+    main { padding-top:90px; }
+    .container { max-width:1200px; margin:0 auto; padding:2rem 1.5rem; }
+    h1 { text-align:center; font-size:2.6rem; color:#5aafff; margin-bottom:3rem; text-shadow:0 0 12px #5aafff44; }
+    .complaint-card { background:var(--glass); backdrop-filter:blur(12px); border:1px solid rgba(90,175,255,0.2); border-radius:12px; padding:1.6rem; margin-bottom:1.6rem; box-shadow:0 8px 24px rgba(0,0,0,0.4); transition:transform 0.25s; }
+    .complaint-card:hover { transform:translateY(-4px); }
+    .card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; padding-bottom:0.8rem; border-bottom:1px solid rgba(90,175,255,0.15); }
+    .card-header strong { font-size:1.3rem; color:#b3d4ff; }
+    .card-header small { color:#c3d4e9; }
+    .card-body p { margin:0.5rem 0; }
+    .card-body strong { color:#a3d4ff; }
+    .delete-btn { background:#ff5e5e; border:none; color:white; padding:0.5rem 1rem; border-radius:6px; cursor:pointer; transition:all 0.25s; }
+    .delete-btn:hover { background:#d32f2f; box-shadow:0 0 12px #ff5e5e44; }
+    #noComplaints { text-align:center; color:#c3d4e9; font-size:1.4rem; padding:4rem 0; display:none; }
+    footer { background:#0b1428; border-top:1px solid #2b3d5c; padding:3.5rem 1.8rem; text-align:center; color:#c3d4e9; margin-top:4rem; }
+    footer img { width:60px; border-radius:50%; margin-bottom:1rem; }
+  </style>
 </head>
 <body>
 
-  <!-- Navbar (כמו ב-index, אבל עם התאמות) -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="index.html">
-        <img src="LSPD.png" alt="LSPD" width="48" class="me-2 rounded-circle">
-        LSPD
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">ראשי</a></li>
-          <li class="nav-item"><a class="nav-link active" href="command.html">מידע לפיקוד</a></li>
-          <li class="nav-item d-none" id="adminMenu">
-            <a class="nav-link" href="admin.html">אדמין פאנל</a>
-          </li>
-          <li class="nav-item" id="logoutMenu">
-            <button id="logoutBtn" class="btn btn-outline-danger ms-3">התנתק</button>
+  <header>
+    <div class="nav-container">
+      <div class="logo-area">
+        <img src="LSPD.png" alt="LSPD">
+        <span>LSPD</span>
+        <span id="userGreeting"></span>
+      </div>
+
+      <nav>
+        <ul id="mainNav">
+          <li><a href="index.html">ראשי</a></li>
+          <li><a href="command.html" class="active">מידע לפיקוד</a></li>
+          <li id="adminMenu" style="display:none;"><a href="admin.html">אדמין פאנל</a></li>
+          <li id="logoutMenu" style="display:none;">
+            <button class="auth-btn logout-btn" id="logoutBtn">התנתק</button>
           </li>
         </ul>
-      </div>
+        <div class="burger" id="burgerMenu">☰</div>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <main class="pt-5 mt-5">
-    <div class="container py-5">
-      <h1 class="text-center mb-5 text-primary">מידע לפיקוד – תלונות אנונימיות</h1>
-
-      <div id="complaintsList" class="row g-4"></div>
-
-      <div id="noComplaints" class="text-center text-muted fs-4 py-5 d-none">
-        אין תלונות חדשות כרגע.
-      </div>
+  <main>
+    <div class="container">
+      <h1>מידע לפיקוד – תלונות אנונימיות</h1>
+      <div id="complaintsList"></div>
+      <div id="noComplaints">אין תלונות חדשות כרגע.</div>
     </div>
   </main>
 
-  <footer class="bg-dark text-white text-center py-4 mt-auto">
-    <div class="container">
-      <img src="gen.png" alt="Gen" width="60" class="mb-3 rounded-circle">
-      <p class="mb-1">© 2025–2026 | האתר נבנה על ידי tomcupcake</p>
-    </div>
+  <footer>
+    <img src="gen.png" alt="">
+    <p>© 2025–2026 | נבנה על ידי tomcupcake</p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const complaints = JSON.parse(localStorage.getItem("lspd_complaints")) || [];
-      const listEl = document.getElementById("complaintsList");
-      const noComplaintsEl = document.getElementById("noComplaints");
+    const BIN_ID_COMPLAINTS = '69789c5d43b1c97be94e3c8b';
+
+    async function loadComplaints() {
+      try {
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID_COMPLAINTS}`);
+        const bin = await res.json();
+        return bin.record.complaints || [];
+      } catch (err) {
+        console.error(err);
+        return [];
+      }
+    }
+
+    async function deleteComplaint(id) {
+      if (!confirm("בטוח למחוק את התלונה הזו?")) return;
+      let complaints = await loadComplaints();
+      complaints = complaints.filter(c => c.id !== id);
+      await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID_COMPLAINTS}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ complaints })
+      });
+      location.reload();
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const currentUser = localStorage.getItem("lspd_currentUser");
+      if (!localStorage.getItem("lspd_loggedIn") || !currentUser) {
+        alert("עליך להתחבר כדי לגשת לדף זה");
+        location.href = "index.html";
+        return;
+      }
+
+      if (currentUser) {
+        document.getElementById('userGreeting').textContent = `${getGreeting()} טובים, ${currentUser}`;
+      }
+
+      if (currentUser === "Artzy") {
+        document.getElementById("adminMenu").style.display = "list-item";
+      }
+      document.getElementById("logoutMenu").style.display = "list-item";
+
+      const complaints = await loadComplaints();
+      const list = document.getElementById("complaintsList");
+      const noComp = document.getElementById("noComplaints");
 
       if (complaints.length === 0) {
-        noComplaintsEl.classList.remove("d-none");
+        noComp.style.display = 'block';
         return;
       }
 
       complaints.forEach(comp => {
         const card = document.createElement("div");
-        card.className = "col-lg-6 col-xl-4";
+        card.className = "complaint-card";
         card.innerHTML = `
-          <div class="card bg-dark-transparent text-white border border-secondary h-100 shadow">
-            <div class="card-header bg-dark border-secondary d-flex justify-content-between align-items-center">
-              <strong>${comp.subject}</strong>
-              <small class="text-muted">${comp.date}</small>
-            </div>
-            <div class="card-body">
-              <p class="mb-2"><strong>שם המפקד:</strong> ${comp.commander}</p>
-              <p class="mb-2"><strong>מספר תג:</strong> ${comp.badge}</p>
-              <p class="mb-3"><strong>תוכן:</strong><br>${comp.content.replace(/\n/g, "<br>")}</p>
-            </div>
-            <div class="card-footer bg-transparent border-0 text-end">
-              <button class="btn btn-sm btn-danger delete-complaint" data-id="${comp.id}">
-                מחק תלונה
-              </button>
-            </div>
+          <div class="card-header">
+            <strong>${comp.subject}</strong>
+            <small>${comp.date}</small>
+          </div>
+          <div class="card-body">
+            <p><strong>שם המפקד:</strong> ${comp.commander}</p>
+            <p><strong>מספר תג:</strong> ${comp.badge}</p>
+            <p><strong>תוכן:</strong><br>${comp.content.replace(/\n/g, '<br>')}</p>
+          </div>
+          <div style="text-align:left;">
+            ${currentUser === "Artzy" ? `<button class="delete-btn" onclick="deleteComplaint(${comp.id})">מחק תלונה</button>` : ''}
           </div>
         `;
-        listEl.appendChild(card);
+        list.appendChild(card);
       });
 
-      // מחיקת תלונה
-      document.querySelectorAll(".delete-complaint").forEach(btn => {
-        btn.addEventListener("click", () => {
-          if (!confirm("בטוח למחוק את התלונה הזו?")) return;
-          const id = Number(btn.dataset.id);
-          const updated = complaints.filter(c => c.id !== id);
-          localStorage.setItem("lspd_complaints", JSON.stringify(updated));
-          location.reload();
-        });
-      });
-
-      // הגנת דף + ניהול navbar
-      if (localStorage.getItem("lspd_loggedIn") !== "true") {
-        alert("עליך להתחבר כדי לגשת לאזור זה");
-        location.href = "index.html";
-      }
-
-      const isAdmin = () => {
-        const user = localStorage.getItem("lspd_currentUser");
-        const users = JSON.parse(localStorage.getItem("lspd_users")) || {};
-        return user && users[user]?.isAdmin;
-      };
-
-      document.getElementById("adminMenu")?.classList.toggle("d-none", !isAdmin());
       document.getElementById("logoutBtn")?.addEventListener("click", () => {
         localStorage.removeItem("lspd_loggedIn");
         localStorage.removeItem("lspd_currentUser");
         location.href = "index.html";
       });
     });
+
+    function getGreeting() {
+      const h = new Date().getHours();
+      if (h < 12) return 'בוקר';
+      if (h < 18) return 'צהריים';
+      return 'ערב';
+    }
   </script>
 </body>
 </html>
