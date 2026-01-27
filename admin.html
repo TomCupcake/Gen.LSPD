@@ -36,7 +36,6 @@
     <div class="container py-5">
       <h1 class="text-center mb-5 text-danger">אדמין פאנל – ניהול משתמשים</h1>
 
-      <!-- טופס הוספת משתמש חדש -->
       <div class="card bg-dark-transparent border border-primary mb-5">
         <div class="card-header bg-dark border-primary">
           <h5 class="mb-0">הוסף משתמש חדש</h5>
@@ -55,10 +54,14 @@
             </div>
             <button type="submit" class="btn btn-success mt-3 w-100">הוסף משתמש</button>
           </form>
+
+          <div class="mt-4">
+            <button id="exportUsers" class="btn btn-info w-100 mb-2">ייצא משתמשים (להעתקה)</button>
+            <button id="importUsers" class="btn btn-warning w-100">ייבא משתמשים (הדבק JSON)</button>
+          </div>
         </div>
       </div>
 
-      <!-- רשימת משתמשים -->
       <h3 class="mb-4">משתמשים קיימים</h3>
       <div class="table-responsive">
         <table class="table table-dark table-hover table-striped">
@@ -87,35 +90,15 @@
   document.addEventListener("DOMContentLoaded", () => {
     const currentUser = localStorage.getItem("lspd_currentUser");
     const isLoggedIn = localStorage.getItem("lspd_loggedIn") === "true";
+    let users = JSON.parse(localStorage.getItem("lspd_users")) || {};
 
-    const users = JSON.parse(localStorage.getItem("lspd_users")) || {};
-    const userData = users[currentUser] || {};
-
-    // בדיקת גישה – כל מי שיש לו isAdmin: true יכול להיכנס
-    if (!isLoggedIn) {
-      alert("עליך להתחבר קודם");
+    if (!isLoggedIn || !users[currentUser]?.isAdmin) {
+      alert("אין גישה");
       location.href = "index.html";
       return;
     }
 
-    if (!currentUser || !users[currentUser]) {
-      alert("שגיאה: משתמש לא קיים במערכת");
-      location.href = "index.html";
-      return;
-    }
-
-    if (userData.isAdmin !== true) {
-      alert("אין לך הרשאות אדמין");
-      location.href = "index.html";
-      return;
-    }
-
-    // הגישה אושרה
-    console.log(`גישה מאושרת למשתמש ${currentUser} (אדמין: ${userData.isAdmin})`);
-
-    const saveUsers = () => {
-      localStorage.setItem("lspd_users", JSON.stringify(users));
-    };
+    const saveUsers = () => localStorage.setItem("lspd_users", JSON.stringify(users));
 
     const renderUsers = () => {
       const tbody = document.getElementById("usersTableBody");
@@ -123,104 +106,89 @@
 
       Object.keys(users).forEach(username => {
         const u = users[username];
-        const isAdmin = u.isAdmin === true;
-
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${username}</td>
           <td class="text-center">
-            <div class="form-check form-switch d-flex justify-content-center">
-              <input class="form-check-input admin-checkbox" type="checkbox" 
-                     ${isAdmin ? 'checked' : ''} 
-                     data-username="${username}"
-                     ${username === "Artzy" ? 'disabled' : ''}>
-            </div>
+            <input type="checkbox" class="form-check-input admin-checkbox" 
+                   ${u.isAdmin ? 'checked' : ''} data-username="${username}"
+                   ${username === "Artzy" ? 'disabled' : ''}>
           </td>
           <td>
-            <button class="btn btn-sm btn-warning me-2 edit-password" data-username="${username}">
-              ערוך סיסמה
-            </button>
-            ${username !== "Artzy" ? `
-              <button class="btn btn-sm btn-danger delete-user" data-username="${username}">
-                מחק
-              </button>
-            ` : '<span class="text-muted">לא ניתן למחוק</span>'}
+            <button class="btn btn-sm btn-warning me-2 edit-password" data-username="${username}">ערוך סיסמה</button>
+            ${username !== "Artzy" ? `<button class="btn btn-sm btn-danger delete-user" data-username="${username}">מחק</button>` : '<span class="text-muted">לא ניתן למחוק</span>'}
           </td>
         `;
         tbody.appendChild(tr);
       });
 
-      // האזנה לשינוי checkbox (אדמין)
-      document.querySelectorAll(".admin-checkbox").forEach(checkbox => {
-        checkbox.addEventListener("change", (e) => {
-          const username = e.target.dataset.username;
-          users[username].isAdmin = e.target.checked;
+      document.querySelectorAll(".admin-checkbox").forEach(cb => {
+        cb.addEventListener("change", e => {
+          const un = e.target.dataset.username;
+          users[un].isAdmin = e.target.checked;
           saveUsers();
-          console.log(`משתמש ${username} → אדמין: ${e.target.checked}`);
         });
       });
 
-      // האזנה לכפתור "ערוך סיסמה"
       document.querySelectorAll(".edit-password").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-          const username = e.target.dataset.username;
-          const currentPass = users[username].password;
-
-          const newPassword = prompt(`סיסמה חדשה למשתמש ${username}\n(הסיסמה הנוכחית: ${currentPass})\n\nהקלד סיסמה חדשה או בטל לשמירה:`, currentPass);
-          
-          if (newPassword === null) return;
-
-          const trimmedPass = newPassword.trim();
-          if (trimmedPass === "") {
-            alert("סיסמה לא יכולה להיות ריקה!");
-            return;
+        btn.addEventListener("click", e => {
+          const un = e.target.dataset.username;
+          const newPass = prompt(`סיסמה חדשה עבור ${un}:`, users[un].password);
+          if (newPass !== null && newPass.trim()) {
+            users[un].password = newPass.trim();
+            saveUsers();
+            alert("עודכן");
+            renderUsers();
           }
+        });
+      });
 
-          users[username].password = trimmedPass;
-          saveUsers();
-          alert(`סיסמה עודכנה בהצלחה עבור ${username}`);
-          renderUsers();
+      document.querySelectorAll(".delete-user").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const un = e.target.dataset.username;
+          if (confirm(`בטוח למחוק ${un}?`)) {
+            delete users[un];
+            saveUsers();
+            renderUsers();
+          }
         });
       });
     };
 
     renderUsers();
 
-    // הוספת משתמש חדש
     document.getElementById("addUserForm")?.addEventListener("submit", e => {
       e.preventDefault();
-      const username = document.getElementById("newUsername").value.trim();
-      const password = document.getElementById("newPassword").value.trim();
-
-      if (!username || !password) {
-        alert("יש למלא שם משתמש וסיסמה");
-        return;
-      }
-      if (users[username]) {
-        alert("שם המשתמש כבר קיים");
-        return;
-      }
-
-      users[username] = { password, isAdmin: false };
+      const un = document.getElementById("newUsername").value.trim();
+      const pw = document.getElementById("newPassword").value.trim();
+      if (!un || !pw || users[un]) return alert("שגיאה – שם משתמש קיים או ריק");
+      users[un] = { password: pw, isAdmin: false };
       saveUsers();
       renderUsers();
       e.target.reset();
-      alert("משתמש נוסף בהצלחה");
+      alert("נוסף");
     });
 
-    // מחיקת משתמש
-    document.addEventListener("click", e => {
-      if (e.target.classList.contains("delete-user")) {
-        const username = e.target.dataset.username;
-        if (confirm(`בטוח למחוק את המשתמש ${username}?`)) {
-          delete users[username];
-          saveUsers();
-          renderUsers();
-        }
+    // ייצוא וייבוא
+    document.getElementById("exportUsers")?.addEventListener("click", () => {
+      const data = JSON.stringify(users, null, 2);
+      prompt("העתק את הטקסט הזה ושמור אותו:", data);
+    });
+
+    document.getElementById("importUsers")?.addEventListener("click", () => {
+      const data = prompt("הדבק כאן את ה-JSON שייצאת קודם:");
+      if (!data) return;
+      try {
+        const imported = JSON.parse(data);
+        users = { ...users, ...imported };
+        saveUsers();
+        renderUsers();
+        alert("יובא בהצלחה");
+      } catch (err) {
+        alert("שגיאה – JSON לא תקין");
       }
     });
 
-    // התנתקות
     document.getElementById("logoutBtn")?.addEventListener("click", () => {
       localStorage.removeItem("lspd_loggedIn");
       localStorage.removeItem("lspd_currentUser");
