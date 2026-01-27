@@ -1,316 +1,142 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>אדמין פאנל - LSPD</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>מידע לפיקוד - LSPD</title>
   <link rel="icon" href="LSPD.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #0e1b35;
-      --surface: #15243f;
-      --text: #f1f5f9;
-      --text-dim: #c3d4e9;
-      --primary: #5aafff;
-      --primary-glow: #5aafff44;
-      --accent: #ff5e5e;
-      --border: #2b3d5c;
-      --glass: rgba(21,36,63,0.65);
-      --blur: blur(12px);
+    /* אותו CSS כמו ב-index, רק שינוי קל לכותרות */
+    :root { /* אותם משתנים */ }
+    /* ... העתק את כל ה-:root ו-styles מ-index אם צריך ... */
+    .complaint-card {
+      background:var(--glass);
+      border:1px solid rgba(90,175,255,0.2);
+      border-radius:10px;
+      padding:1.4rem;
+      margin-bottom:1.4rem;
     }
-
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Heebo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; line-height:1.6; direction:rtl; touch-action:manipulation; font-size:16px; }
-
-    header { position:fixed; top:0; left:0; right:0; z-index:1000; background:linear-gradient(180deg,#1c2f52 0%,#13203a 100%); border-bottom:1px solid rgba(90,175,255,0.22); box-shadow:0 4px 20px rgba(0,0,0,0.5); backdrop-filter:blur(12px); }
-    .nav-container { max-width:1380px; margin:0 auto; padding:1rem 1.8rem; display:flex; justify-content:space-between; align-items:center; }
-    .logo-area { display:flex; align-items:center; gap:1rem; }
-    .logo-area img { width:46px; filter:drop-shadow(0 0 8px var(--primary-glow)); }
-    .logo-area span { font-size:1.7rem; font-weight:700; background:linear-gradient(90deg,#a3d4ff,#5aafff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    #userGreeting { font-size:1rem; color:var(--text-dim); margin-right:0.8rem; font-weight:400; white-space:nowrap; }
-    nav ul { display:flex; align-items:center; gap:1.9rem; list-style:none; }
-    nav a { color:var(--text-dim); text-decoration:none; font-weight:500; position:relative; transition:all 0.28s ease; }
-    nav a:hover { color:white; text-shadow:0 0 12px var(--primary-glow); }
-    nav a::after { content:''; position:absolute; width:0; height:2px; bottom:-6px; right:0; background:var(--primary); transition:width 0.4s ease; box-shadow:0 0 10px var(--primary-glow); }
-    nav a:hover::after { width:100%; }
-    .auth-btn { padding:0.6rem 1.4rem; border-radius:6px; font-weight:600; cursor:pointer; transition:all 0.3s ease; }
-    #logoutBtn { background:transparent; border:2px solid var(--accent); color:var(--accent); }
-    #logoutBtn:hover { background:var(--accent); color:white; box-shadow:0 0 12px #ff5e5e44; }
-    .burger { display:none; font-size:1.9rem; color:var(--text-dim); cursor:pointer; }
-
-    @media (max-width: 880px) {
-      .burger { display:block; }
-      nav ul { display:none; flex-direction:column; position:absolute; top:100%; right:0; background:var(--surface); width:100%; padding:1.6rem; border-top:1px solid var(--border); }
-      nav ul.active { display:flex; }
-      .nav-container { padding:1rem 1.2rem; }
-      .logo-area span { font-size:1.4rem; }
-      #userGreeting { font-size:0.9rem; margin-right:0.5rem; }
-      .auth-btn { padding:0.5rem 1rem; font-size:0.95rem; }
+    .delete-btn {
+      background:#ff5e5e;
+      color:white;
+      border:none;
+      padding:0.6rem 1.2rem;
+      border-radius:6px;
+      cursor:pointer;
     }
-
-    @media (max-width: 480px) {
-      .logo-area img { width:38px; }
-      .logo-area span { font-size:1.3rem; }
-      #userGreeting { font-size:0.85rem; }
-      h1 { font-size:2rem; }
-      .section-card { padding:1.6rem 1.2rem; }
-      .form-group label { font-size:0.95rem; }
-      input { padding:0.9rem 1.1rem; font-size:0.95rem; }
-      .submit-btn { padding:1rem; font-size:1.05rem; }
-      table th, table td { padding:0.8rem 1rem; font-size:0.9rem; }
-    }
-
-    main { padding-top:90px; }
-    .container { max-width:1000px; margin:0 auto; padding:2rem 1.5rem; }
-    h1 { text-align:center; font-size:2.6rem; color:var(--accent); margin-bottom:3rem; text-shadow:0 0 12px rgba(255,94,94,0.3); }
-    .section-card { background:var(--glass); backdrop-filter:var(--blur); border:1px solid rgba(90,175,255,0.2); border-radius:12px; padding:2rem; margin-bottom:2.5rem; box-shadow:0 12px 36px rgba(0,0,0,0.45); }
-    .form-group { margin-bottom:1.6rem; }
-    label { display:block; margin-bottom:0.6rem; color:var(--text-dim); font-weight:500; }
-    input { width:100%; padding:1rem 1.3rem; background:rgba(15,26,47,0.7); border:1px solid var(--border); border-radius:8px; color:var(--text); font-size:1.05rem; transition:all 0.25s; }
-    input:focus { border-color:var(--primary); box-shadow:0 0 12px var(--primary-glow); outline:none; }
-    .submit-btn { width:100%; padding:1.1rem; background:var(--primary); color:white; border:none; border-radius:8px; font-size:1.15rem; font-weight:600; cursor:pointer; transition:all 0.3s; }
-    .submit-btn:hover { background:#4a9eff; box-shadow:0 0 12px var(--primary-glow); transform:translateY(-2px); }
-    .table-container { overflow-x:auto; }
-    table { width:100%; border-collapse:collapse; background:var(--glass); backdrop-filter:var(--blur); border:1px solid rgba(90,175,255,0.2); border-radius:12px; overflow:hidden; }
-    th, td { padding:1rem 1.2rem; text-align:right; border-bottom:1px solid rgba(90,175,255,0.15); }
-    th { background:rgba(90,175,255,0.1); color:#b3d4ff; font-weight:600; }
-    tr:hover { background:rgba(90,175,255,0.08); }
-    .action-btn { padding:0.5rem 1rem; border:none; border-radius:6px; cursor:pointer; font-size:0.95rem; transition:all 0.25s; margin-left:0.5rem; }
-    .edit-btn { background:#ffaa00; color:white; }
-    .edit-btn:hover { background:#e69500; }
-    .delete-btn { background:var(--accent); color:white; }
-    .delete-btn:hover { background:#d32f2f; }
-    .admin-switch { display:flex; justify-content:center; }
-    .form-check-input { cursor:pointer; }
-    #noUsers { text-align:center; color:var(--text-dim); font-size:1.4rem; padding:3rem 0; display:none; }
-    footer { background:#0b1428; border-top:1px solid var(--border); padding:3.5rem 1.8rem; text-align:center; color:var(--text-dim); margin-top:4rem; }
-    footer img { width:60px; border-radius:50%; margin-bottom:1rem; }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="nav-container">
-      <div class="logo-area">
-        <img src="LSPD.png" alt="LSPD">
-        <span>LSPD</span>
-        <span id="userGreeting"></span>
-      </div>
-
-      <nav>
-        <ul id="mainNav">
-          <li><a href="index.html">ראשי</a></li>
-          <li><a href="command.html">מידע לפיקוד</a></li>
-          <li id="adminMenu"><a href="admin.html" class="active">אדמין פאנל</a></li>
-          <li id="logoutMenu">
-            <button class="auth-btn logout-btn" id="logoutBtn">התנתק</button>
-          </li>
-        </ul>
-        <div class="burger" id="burgerMenu">☰</div>
-      </nav>
+<header>
+  <!-- אותו header כמו ב-index -->
+  <div class="nav-container">
+    <div class="logo-area">
+      <img src="LSPD.png" alt="LSPD">
+      <span>LSPD</span>
+      <span id="userGreeting"></span>
     </div>
-  </header>
+    <nav>
+      <ul id="mainNavUl">
+        <li><a href="index.html">ראשי</a></li>
+        <li><a href="command.html" class="active">מידע לפיקוד</a></li>
+        <li id="adminMenu" style="display:none;"><a href="admin.html">אדמין פאנל</a></li>
+        <li id="logoutMenu" style="display:none;">
+          <button class="auth-btn" id="logoutBtn">התנתק</button>
+        </li>
+      </ul>
+      <div class="burger" id="burgerMenu">☰</div>
+    </nav>
+  </div>
+</header>
 
-  <main>
-    <div class="container">
-      <h1>אדמין פאנל – ניהול משתמשים</h1>
+<main>
+  <div class="container" style="padding:2rem 1rem;max-width:1100px;margin:0 auto;">
+    <h1>תלונות אנונימיות</h1>
+    <div id="complaintsList"></div>
+    <p id="noComplaints" style="text-align:center;color:#c3d4e9;display:none;">אין תלונות כרגע</p>
+  </div>
+</main>
 
-      <div class="section-card">
-        <h3 style="margin-bottom:1.5rem; color:#b3d4ff;">הוסף משתמש חדש</h3>
-        <form id="addUserForm">
-          <div class="form-group">
-            <label for="newUsername">שם משתמש</label>
-            <input type="text" id="newUsername" required>
-          </div>
-          <div class="form-group">
-            <label for="newPassword">סיסמה</label>
-            <input type="text" id="newPassword" required>
-          </div>
-          <button type="submit" class="submit-btn">הוסף משתמש</button>
-        </form>
-      </div>
+<footer>
+  <!-- אותו footer -->
+</footer>
 
-      <div class="section-card">
-        <h3 style="margin-bottom:1.5rem; color:#b3d4ff;">משתמשים קיימים</h3>
-        <div class="table-container">
-          <table id="usersTable">
-            <thead>
-              <tr>
-                <th>שם משתמש</th>
-                <th>אדמין?</th>
-                <th>פעולות</th>
-              </tr>
-            </thead>
-            <tbody id="usersTableBody"></tbody>
-          </table>
-        </div>
-        <div id="noUsers" style="display:none;">אין משתמשים נוספים במערכת.</div>
-      </div>
-    </div>
-  </main>
+<script>
+const BIN_ID_COMPLAINTS = '69789c5d43b1c97be94e3c8b';
 
-  <footer>
-    <img src="gen.png" alt="">
-    <p>© 2025–2026 | נבנה על ידי tomcupcake</p>
-  </footer>
+async function loadComplaints() {
+  try {
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID_COMPLAINTS}`);
+    const d = await r.json();
+    return d.record.complaints || [];
+  } catch(e) {
+    console.error(e);
+    return [];
+  }
+}
 
-  <script>
-    const BIN_ID_USERS = '69789ce8d0ea881f4089a7fd';
+async function deleteComplaint(id) {
+  if (!confirm('בטוח למחוק?')) return;
+  let list = await loadComplaints();
+  list = list.filter(c => c.id !== id);
+  await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID_COMPLAINTS}`, {
+    method: 'PUT',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({complaints: list})
+  });
+  render();
+}
 
-    async function loadUsers() {
-      try {
-        const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID_USERS}`);
-        const bin = await res.json();
-        return bin.record.users || {};
-      } catch (err) {
-        console.error(err);
-        return {};
-      }
-    }
+function render() {
+  loadComplaints().then(complaints => {
+    const container = document.getElementById('complaintsList');
+    container.innerHTML = '';
+    document.getElementById('noComplaints').style.display = complaints.length ? 'none' : 'block';
 
-    async function saveUsers(users) {
-      try {
-        await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID_USERS}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ users })
-        });
-      } catch (err) {
-        console.error("שגיאה בשמירה", err);
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", async () => {
-      // בדיקת הרשאות – Artzy תמיד אדמין
-      const currentUser = localStorage.getItem("lspd_currentUser");
-      if (!localStorage.getItem("lspd_loggedIn") || !currentUser) {
-        alert("עליך להתחבר כדי לגשת לדף זה");
-        location.href = "index.html";
-        return;
-      }
-
-      // Artzy תמיד יכול להיכנס לאדמין
-      const isArtzy = currentUser === "Artzy";
-
-      if (!isArtzy) {
-        const users = await loadUsers();
-        if (!users[currentUser] || !users[currentUser].isAdmin) {
-          alert("אין לך הרשאות אדמין");
-          location.href = "index.html";
-          return;
-        }
-      }
-
-      document.getElementById('userGreeting').textContent = `${getGreeting()} טובים, ${currentUser}`;
-      document.getElementById("logoutMenu").style.display = "list-item";
-
-      const users = await loadUsers();
-
-      const renderUsers = async () => {
-        const tbody = document.getElementById("usersTableBody");
-        tbody.innerHTML = "";
-        const noUsersEl = document.getElementById("noUsers");
-
-        const userKeys = Object.keys(users);
-        if (userKeys.length === 0) {
-          noUsersEl.style.display = 'block';
-          return;
-        }
-
-        noUsersEl.style.display = 'none';
-
-        userKeys.forEach(username => {
-          const u = users[username];
-          const isAdmin = u.isAdmin === true;
-
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${username}</td>
-            <td class="admin-switch">
-              <label class="form-check form-switch">
-                <input class="form-check-input admin-checkbox" type="checkbox" 
-                       ${isAdmin ? 'checked' : ''} data-username="${username}"
-                       ${username === "Artzy" ? 'disabled' : ''}>
-              </label>
-            </td>
-            <td>
-              <button class="action-btn edit-btn" data-username="${username}">ערוך סיסמה</button>
-              ${username !== "Artzy" ? `
-                <button class="action-btn delete-btn" data-username="${username}">מחק</button>
-              ` : '<span class="text-muted">לא ניתן למחוק</span>'}
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-
-        // שינוי אדמין
-        document.querySelectorAll(".admin-checkbox").forEach(cb => {
-          cb.addEventListener("change", async e => {
-            const un = e.target.dataset.username;
-            users[un].isAdmin = e.target.checked;
-            await saveUsers(users);
-          });
-        });
-
-        // עריכת סיסמה
-        document.querySelectorAll(".edit-btn").forEach(btn => {
-          btn.addEventListener("click", async e => {
-            const un = e.target.dataset.username;
-            const current = users[un].password;
-            const newPass = prompt(`סיסמה חדשה למשתמש ${un}\n(נוכחית: ${current})`, current);
-            if (newPass === null) return;
-            const trimmed = newPass.trim();
-            if (!trimmed) return alert("סיסמה לא יכולה להיות ריקה");
-            users[un].password = trimmed;
-            await saveUsers(users);
-            alert(`סיסמה עודכנה עבור ${un}`);
-          });
-        });
-
-        // מחיקת משתמש
-        document.querySelectorAll(".delete-btn").forEach(btn => {
-          btn.addEventListener("click", async e => {
-            const un = e.target.dataset.username;
-            if (confirm(`בטוח למחוק את המשתמש ${un}?`)) {
-              delete users[un];
-              await saveUsers(users);
-              renderUsers();
-            }
-          });
-        });
-      };
-
-      await renderUsers();
-
-      document.getElementById("addUserForm")?.addEventListener("submit", async e => {
-        e.preventDefault();
-        const username = document.getElementById("newUsername").value.trim();
-        const password = document.getElementById("newPassword").value.trim();
-
-        if (!username || !password) return alert("מלא שם משתמש וסיסמה");
-        if (users[username]) return alert("שם משתמש כבר קיים");
-
-        users[username] = { password, isAdmin: false };
-        await saveUsers(users);
-        await renderUsers();
-        e.target.reset();
-        alert("משתמש נוסף בהצלחה");
-      });
-
-      document.getElementById("logoutBtn")?.addEventListener("click", () => {
-        localStorage.removeItem("lspd_loggedIn");
-        localStorage.removeItem("lspd_currentUser");
-        location.href = "index.html";
-      });
+    complaints.forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'complaint-card';
+      div.innerHTML = `
+        <strong>${c.subject}</strong><br>
+        <small>${c.date}</small><br><br>
+        <strong>מפקד:</strong> ${c.commander} • <strong>תג:</strong> ${c.badge}<br><br>
+        ${c.content.replace(/\n/g,'<br>')}<br><br>
+        ${localStorage.getItem("lspd_currentUser") === "Artzy" ?
+          `<button class="delete-btn" onclick="deleteComplaint(${c.id})">מחק</button>` : ''}
+      `;
+      container.appendChild(div);
     });
+  });
+}
 
-    function getGreeting() {
-      const h = new Date().getHours();
-      if (h < 12) return 'בוקר';
-      if (h < 18) return 'צהריים';
-      return 'ערב';
-    }
-  </script>
+document.addEventListener('DOMContentLoaded', () => {
+  // burger
+  const burger = document.getElementById('burgerMenu');
+  const navUl  = document.querySelector('#mainNavUl');
+  if (burger && navUl) {
+    burger.addEventListener('click', () => {
+      navUl.classList.toggle('active');
+      burger.textContent = navUl.classList.contains('active') ? '✕' : '☰';
+    });
+  }
+
+  // render complaints
+  render();
+
+  // logout
+  document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    localStorage.removeItem("lspd_loggedIn");
+    localStorage.removeItem("lspd_currentUser");
+    location.href = "index.html";
+  });
+
+  // show admin menu if Artzy
+  if (localStorage.getItem("lspd_currentUser") === "Artzy") {
+    document.getElementById('adminMenu').style.display = 'list-item';
+  }
+});
+</script>
 </body>
 </html>

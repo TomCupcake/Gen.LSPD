@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>LSPD • משטרת לוס סנטוס</title>
   <link rel="icon" href="LSPD.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -21,404 +21,547 @@
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Heebo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; line-height:1.6; direction:rtl; overflow-x:hidden; touch-action:manipulation; font-size:16px; }
+    body {
+      font-family:'Heebo',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      line-height:1.6;
+      direction:rtl;
+      touch-action:manipulation;
+      font-size:16px;
+    }
 
-    header { position:fixed; top:0; left:0; right:0; z-index:1000; background:linear-gradient(180deg,#1c2f52 0%,#13203a 100%); border-bottom:1px solid rgba(90,175,255,0.22); box-shadow:0 4px 20px rgba(0,0,0,0.5); backdrop-filter:blur(12px); }
-    .nav-container { max-width:1380px; margin:0 auto; padding:1rem 1.8rem; display:flex; justify-content:space-between; align-items:center; }
-    .logo-area { display:flex; align-items:center; gap:1rem; }
-    .logo-area img { width:46px; filter:drop-shadow(0 0 8px #5aafff44); }
-    .logo-area span { font-size:1.7rem; font-weight:700; background:linear-gradient(90deg,#a3d4ff,#5aafff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    #userGreeting { font-size:1rem; color:#c3d4e9; margin-right:0.8rem; font-weight:400; white-space:nowrap; }
-    nav ul { display:flex; align-items:center; gap:1.9rem; list-style:none; }
-    nav a { color:#c3d4e9; text-decoration:none; font-weight:500; position:relative; transition:all 0.28s ease; }
-    nav a:hover { color:white; text-shadow:0 0 12px #5aafff44; }
-    nav a::after { content:''; position:absolute; width:0; height:2px; bottom:-6px; right:0; background:#5aafff; transition:width 0.4s ease; box-shadow:0 0 10px #5aafff44; }
-    nav a:hover::after { width:100%; }
-    .auth-btn { padding:0.6rem 1.4rem; border-radius:6px; font-weight:600; cursor:pointer; transition:all 0.3s ease; }
-    #loginBtn { background:transparent; border:2px solid #5aafff; color:#5aafff; }
-    #loginBtn:hover { background:#5aafff; color:white; box-shadow:0 0 12px #5aafff44; }
-    #logoutBtn { background:transparent; border:2px solid #ff5e5e; color:#ff5e5e; }
-    #logoutBtn:hover { background:#ff5e5e; color:white; box-shadow:0 0 12px #ff5e5e44; }
-    .burger { display:none; font-size:1.9rem; color:#c3d4e9; cursor:pointer; }
+    header {
+      position:fixed;
+      top:0; left:0; right:0;
+      z-index:1000;
+      background:linear-gradient(180deg,#1c2f52 0%,#13203a 100%);
+      border-bottom:1px solid rgba(90,175,255,0.22);
+      box-shadow:0 4px 20px rgba(0,0,0,0.5);
+      backdrop-filter:var(--blur);
+    }
 
-    @media (max-width: 880px) {
+    .nav-container {
+      max-width:1380px;
+      margin:0 auto;
+      padding:0.9rem 1.2rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .logo-area {
+      display:flex;
+      align-items:center;
+      gap:0.8rem;
+    }
+
+    .logo-area img { width:44px; }
+
+    .logo-area span {
+      font-size:1.6rem;
+      font-weight:700;
+      background:linear-gradient(90deg,#a3d4ff,#5aafff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    #userGreeting {
+      font-size:0.95rem;
+      color:var(--text-dim);
+      margin-right:0.6rem;
+    }
+
+    nav ul {
+      display:flex;
+      align-items:center;
+      gap:1.4rem;
+      list-style:none;
+    }
+
+    nav a {
+      color:var(--text-dim);
+      text-decoration:none;
+      font-weight:500;
+      font-size:1rem;
+    }
+
+    nav a:hover { color:white; }
+
+    .auth-btn {
+      padding:0.55rem 1.2rem;
+      border-radius:6px;
+      font-weight:600;
+      font-size:0.95rem;
+      cursor:pointer;
+    }
+
+    #loginBtn {
+      background:transparent;
+      border:2px solid var(--primary);
+      color:var(--primary);
+    }
+
+    #logoutBtn {
+      background:transparent;
+      border:2px solid var(--accent);
+      color:var(--accent);
+    }
+
+    .burger {
+      display:none;
+      font-size:1.8rem;
+      color:var(--text-dim);
+      cursor:pointer;
+      padding:0.4rem;
+    }
+
+    @media (max-width: 860px) {
       .burger { display:block; }
-      nav ul { display:none; flex-direction:column; position:absolute; top:100%; right:0; background:#15243f; width:100%; padding:1.6rem; border-top:1px solid #2b3d5c; }
+      nav ul {
+        display:none;
+        flex-direction:column;
+        position:absolute;
+        top:100%;
+        right:0;
+        background:var(--surface);
+        width:100%;
+        padding:1.4rem;
+        border-top:1px solid var(--border);
+      }
       nav ul.active { display:flex; }
-      .nav-container { padding:1rem 1.2rem; }
+      .nav-container { padding:0.9rem 1rem; }
       .logo-area span { font-size:1.4rem; }
-      #userGreeting { font-size:0.9rem; margin-right:0.5rem; }
-      .auth-btn { padding:0.5rem 1rem; font-size:0.95rem; }
+      #userGreeting { font-size:0.9rem; }
     }
 
     @media (max-width: 480px) {
       .logo-area img { width:38px; }
-      .logo-area span { font-size:1.3rem; }
-      #userGreeting { font-size:0.85rem; }
-      h1 { font-size:2rem; }
-      .hero h1 { font-size:clamp(2.2rem,12vw,4rem); }
-      .hero .lead { font-size:clamp(1.1rem,4vw,1.5rem); }
-      .hero .slogan { font-size:clamp(1.3rem,5vw,1.8rem); }
-      .quote-area p { font-size:clamp(1.3rem,5vw,1.9rem); }
-      .section-title { font-size:1.8rem; }
-      .form-glass { padding:1.6rem 1.2rem; }
-      input, textarea { padding:0.9rem 1.1rem; font-size:1rem; }
-      .submit-btn { padding:1rem; font-size:1.05rem; }
+      .logo-area span { font-size:1.25rem; }
+      h1 { font-size:2.1rem; }
+      .section-title { font-size:1.7rem; }
+      input, textarea, button { font-size:1rem; padding:0.9rem; }
     }
 
-    main { padding-top:80px; }
-    .hero { height:92vh; min-height:720px; position:relative; overflow:hidden; }
+    main { padding-top:70px; }
+
+    .hero {
+      height:90vh;
+      min-height:600px;
+      position:relative;
+      overflow:hidden;
+    }
+
     .carousel { position:absolute; inset:0; }
-    .slide { position:absolute; inset:0; opacity:0; transition:opacity 1.4s ease; }
+    .slide { position:absolute; inset:0; opacity:0; transition:opacity 1.6s; }
     .slide.active { opacity:1; }
-    .slide img { width:100%; height:100%; object-fit:cover; filter:brightness(0.72) contrast(1.1); }
-    .hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(14,27,53,0.45),rgba(14,27,53,0.9) 68%); z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 1.5rem; }
-    .hero h1 { font-size:clamp(2.8rem,7vw,4.6rem); font-weight:700; color:#b3d4ff; margin-bottom:0.6rem; text-shadow:0 3px 12px rgba(0,0,0,0.7); }
-    .hero .lead { font-size:clamp(1.3rem,3.2vw,1.7rem); color:#c3d4e9; margin:0.6rem 0 1rem; }
-    .hero .slogan { font-size:clamp(1.6rem,4vw,2.1rem); color:#8bb8ff; font-style:italic; }
-    .quote-area { position:absolute; bottom:10%; left:50%; transform:translateX(-50%); text-align:center; z-index:3; max-width:90%; }
-    .quote-area p { font-size:clamp(1.6rem,3.8vw,2.2rem); color:white; text-shadow:0 3px 10px black; margin-bottom:0.4rem; }
-    .quote-area .author { font-size:clamp(1rem,2.4vw,1.3rem); color:#c3d4e9; }
+    .slide img { width:100%; height:100%; object-fit:cover; filter:brightness(0.7); }
 
-    .complaint-section { padding:6rem 1.8rem 8rem; }
-    .section-title { text-align:center; font-size:2.2rem; color:#8bb8ff; margin-bottom:2.8rem; }
-    .form-glass { max-width:740px; margin:0 auto; background:var(--glass); backdrop-filter:var(--blur); border:1px solid rgba(90,175,255,0.2); border-radius:12px; padding:2.4rem 2rem; box-shadow:0 12px 36px rgba(0,0,0,0.45); }
-    .form-group { margin-bottom:1.5rem; }
-    label { display:block; margin-bottom:0.6rem; color:#c3d4e9; font-weight:500; }
-    input, textarea { width:100%; padding:1rem 1.3rem; background:rgba(15,26,47,0.7); border:1px solid #2b3d5c; border-radius:8px; color:var(--text); font-size:1.05rem; transition:all 0.25s; }
-    input:focus, textarea:focus { border-color:#5aafff; box-shadow:0 0 12px #5aafff44; outline:none; }
-    textarea { min-height:130px; }
-    .submit-btn { width:100%; padding:1.1rem; background:#ff5e5e; color:white; border:none; border-radius:8px; font-size:1.15rem; font-weight:600; cursor:pointer; transition:all 0.3s; }
-    .submit-btn:hover { background:#d32f2f; box-shadow:0 0 12px #ff5e5e44; transform:translateY(-2px); }
-
-    footer { background:#0b1428; border-top:1px solid #2b3d5c; padding:3.5rem 1.8rem; text-align:center; color:#c3d4e9; }
-    footer img { width:60px; border-radius:50%; margin-bottom:1rem; }
-
-    .modal { position:fixed; inset:0; background:rgba(0,0,0,0.82); backdrop-filter:blur(4px); display:none; place-items:center; z-index:2000; }
-    .modal.active { display:grid; }
-    .modal-content { background:var(--glass); backdrop-filter:var(--blur); border:1px solid rgba(90,175,255,0.25); border-radius:12px; width:90%; max-width:420px; padding:2.2rem 1.8rem; box-shadow:0 16px 48px rgba(0,0,0,0.6); animation:modalIn 0.4s ease; }
-    @keyframes modalIn { from {opacity:0; transform:scale(0.92)} to {opacity:1; transform:scale(1)} }
-    .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.6rem; }
-    .modal-title { font-size:1.55rem; color:#5aafff; }
-    .close-modal { background:none; border:none; font-size:2.1rem; color:#c3d4e9; cursor:pointer; }
-    .error-text { color:#ff5e5e; font-size:0.95rem; margin-top:0.5rem; }
-
-    @media (max-width: 480px) {
-      .modal-content { padding:1.6rem 1.2rem; }
-      .modal-title { font-size:1.4rem; }
-      .close-modal { font-size:1.8rem; }
-      .form-group label { font-size:0.95rem; }
-      input, textarea { padding:0.9rem 1.1rem; font-size:0.95rem; }
+    .hero-overlay {
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom,rgba(14,27,53,0.5),rgba(14,27,53,0.92));
+      z-index:2;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:0 1rem;
     }
+
+    .hero h1 { font-size:clamp(2.4rem,8vw,4.2rem); color:#b3d4ff; margin-bottom:0.5rem; }
+    .hero .lead { font-size:clamp(1.2rem,3.5vw,1.6rem); color:var(--text-dim); }
+    .hero .slogan { font-size:clamp(1.5rem,4.5vw,2rem); color:#8bb8ff; font-style:italic; }
+
+    .quote-area {
+      position:absolute;
+      bottom:8%;
+      left:50%;
+      transform:translateX(-50%);
+      text-align:center;
+      max-width:90%;
+    }
+
+    .quote-area p { font-size:clamp(1.4rem,4vw,2rem); color:white; }
+    .quote-area .author { font-size:clamp(1rem,2.5vw,1.3rem); color:#c3d4e9; }
+
+    .complaint-section { padding:5rem 1.2rem 7rem; }
+    .section-title { text-align:center; font-size:2rem; color:#8bb8ff; margin-bottom:2.5rem; }
+    .form-glass {
+      max-width:720px;
+      margin:0 auto;
+      background:var(--glass);
+      backdrop-filter:var(--blur);
+      border:1px solid rgba(90,175,255,0.2);
+      border-radius:12px;
+      padding:2rem 1.6rem;
+      box-shadow:0 10px 30px rgba(0,0,0,0.45);
+    }
+
+    .form-group { margin-bottom:1.4rem; }
+    label { display:block; margin-bottom:0.5rem; color:var(--text-dim); font-weight:500; }
+    input, textarea {
+      width:100%;
+      padding:0.95rem 1.2rem;
+      background:rgba(15,26,47,0.75);
+      border:1px solid var(--border);
+      border-radius:8px;
+      color:var(--text);
+      font-size:1.05rem;
+    }
+
+    textarea { min-height:120px; resize:vertical; }
+
+    input:focus, textarea:focus {
+      border-color:var(--primary);
+      box-shadow:0 0 10px var(--primary-glow);
+      outline:none;
+    }
+
+    .submit-btn {
+      width:100%;
+      padding:1rem;
+      background:var(--accent);
+      color:white;
+      border:none;
+      border-radius:8px;
+      font-size:1.1rem;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .submit-btn:hover { background:#d32f2f; transform:translateY(-1px); }
+
+    footer {
+      background:#0b1428;
+      border-top:1px solid var(--border);
+      padding:3rem 1.2rem;
+      text-align:center;
+      color:var(--text-dim);
+    }
+
+    footer img { width:55px; border-radius:50%; margin-bottom:0.8rem; }
+
+    .modal {
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.85);
+      backdrop-filter:blur(5px);
+      display:none;
+      place-items:center;
+      z-index:2000;
+    }
+
+    .modal.active { display:grid; }
+
+    .modal-content {
+      background:var(--glass);
+      backdrop-filter:var(--blur);
+      border:1px solid rgba(90,175,255,0.25);
+      border-radius:12px;
+      width:92%;
+      max-width:400px;
+      padding:1.8rem 1.4rem;
+      box-shadow:0 14px 40px rgba(0,0,0,0.6);
+    }
+
+    .modal-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:1.4rem;
+    }
+
+    .modal-title { font-size:1.45rem; color:var(--primary); }
+
+    .close-modal {
+      background:none;
+      border:none;
+      font-size:2rem;
+      color:var(--text-dim);
+      cursor:pointer;
+    }
+
+    .error-text { color:var(--accent); font-size:0.9rem; margin-top:0.4rem; }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="nav-container">
-      <div class="logo-area">
-        <img src="LSPD.png" alt="LSPD">
-        <span>LSPD</span>
-        <span id="userGreeting"></span>
-      </div>
-
-      <nav>
-        <ul id="mainNav">
-          <li><a href="#home">ראשי</a></li>
-          <li><a href="roster.html">רוסטר</a></li>
-          <li><a href="policeprocedures.html">נהלים</a></li>
-          <li><a href="Patrol.html">פטרול</a></li>
-          <li><a href="Detective.html">דיטקטיב</a></li>
-          <li><a href="SWAT.html">סוואט</a></li>
-          <li id="loginItem"><button class="auth-btn" id="loginBtn">התחברות</button></li>
-          <li id="commandMenu" style="display:none;"><a href="command.html">מידע לפיקוד</a></li>
-          <li id="adminMenu" style="display:none;"><a href="admin.html">אדמין פאנל</a></li>
-          <li id="logoutMenu" style="display:none;">
-            <button class="auth-btn logout-btn" id="logoutBtn">התנתק</button>
-          </li>
-        </ul>
-        <div class="burger" id="burgerMenu">☰</div>
-      </nav>
+<header>
+  <div class="nav-container">
+    <div class="logo-area">
+      <img src="LSPD.png" alt="LSPD">
+      <span>LSPD</span>
+      <span id="userGreeting"></span>
     </div>
-  </header>
 
-  <div class="modal" id="loginModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">כניסה למערכת LSPD</div>
-        <button class="close-modal" id="closeLogin">×</button>
+    <nav>
+      <ul id="mainNavUl">
+        <li><a href="#home">ראשי</a></li>
+        <li><a href="roster.html">רוסטר</a></li>
+        <li><a href="policeprocedures.html">נהלים</a></li>
+        <li><a href="Patrol.html">פטרול</a></li>
+        <li><a href="Detective.html">דיטקטיב</a></li>
+        <li><a href="SWAT.html">סוואט</a></li>
+        <li id="loginItem"><button class="auth-btn" id="loginBtn">התחברות</button></li>
+        <li id="commandMenu" style="display:none;"><a href="command.html">מידע לפיקוד</a></li>
+        <li id="adminMenu" style="display:none;"><a href="admin.html">אדמין פאנל</a></li>
+        <li id="logoutMenu" style="display:none;">
+          <button class="auth-btn" id="logoutBtn">התנתק</button>
+        </li>
+      </ul>
+      <div class="burger" id="burgerMenu">☰</div>
+    </nav>
+  </div>
+</header>
+
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">כניסה למערכת LSPD</div>
+      <button class="close-modal" id="closeLogin">×</button>
+    </div>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">שם משתמש</label>
+        <input type="text" id="username" required autocomplete="username">
       </div>
-      <form id="loginForm">
+      <div class="form-group">
+        <label for="password">סיסמה</label>
+        <input type="password" id="password" required autocomplete="current-password">
+      </div>
+      <div class="error-text" id="loginError"></div>
+      <button type="submit" class="submit-btn">כניסה</button>
+    </form>
+  </div>
+</div>
+
+<main>
+  <section class="hero" id="home">
+    <div class="carousel">
+      <div class="slide active"><img src="hallway.png" alt=""></div>
+      <div class="slide"><img src="command.png" alt=""></div>
+      <div class="slide"><img src="command2.png" alt=""></div>
+      <div class="slide"><img src="officers.png" alt=""></div>
+      <div class="slide"><img src="promotion.png" alt=""></div>
+    </div>
+
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <h1>משטרת לוס סנטוס</h1>
+        <p class="lead">אתר מידע מבצעי לשוטרים</p>
+        <div class="slogan">"To Obey & Survive"</div>
+      </div>
+    </div>
+
+    <div class="quote-area">
+      <p id="quoteText">"ציטוט 1"</p>
+      <div class="author">— כותב 1</div>
+    </div>
+  </section>
+
+  <section class="complaint-section">
+    <h2 class="section-title">הגשת תלונה אנונימית</h2>
+    <div class="form-glass">
+      <form id="complaintForm">
         <div class="form-group">
-          <label for="username">שם משתמש</label>
-          <input type="text" id="username" required>
+          <label for="commanderName">שם המפקד</label>
+          <input type="text" id="commanderName" required>
         </div>
         <div class="form-group">
-          <label for="password">סיסמה</label>
-          <input type="password" id="password" required>
+          <label for="badgeNumber">מספר תג</label>
+          <input type="text" id="badgeNumber" required>
         </div>
-        <div class="error-text" id="loginError"></div>
-        <button type="submit" class="submit-btn" style="margin-top:1.3rem;">כניסה</button>
+        <div class="form-group">
+          <label for="subject">נושא התלונה</label>
+          <input type="text" id="subject" required>
+        </div>
+        <div class="form-group">
+          <label for="content">תוכן התלונה</label>
+          <textarea id="content" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">שלח תלונה אנונימית</button>
       </form>
     </div>
-  </div>
+  </section>
+</main>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="carousel">
-        <div class="slide active"><img src="hallway.png" alt=""></div>
-        <div class="slide"><img src="command.png" alt=""></div>
-        <div class="slide"><img src="command2.png" alt=""></div>
-        <div class="slide"><img src="officers.png" alt=""></div>
-        <div class="slide"><img src="promotion.png" alt=""></div>
-      </div>
+<footer>
+  <img src="gen.png" alt="">
+  <p>© 2025–2026 | נבנה על ידי tomcupcake</p>
+</footer>
 
-      <div class="hero-overlay">
-        <div class="hero-content">
-          <h1>משטרת לוס סנטוס</h1>
-          <p class="lead">אתר מידע מבצעי לשוטרים</p>
-          <div class="slogan">"To Obey & Survive"</div>
-        </div>
-      </div>
+<script>
+const BIN_ID_COMPLAINTS = '69789c5d43b1c97be94e3c8b';
+const BIN_ID_USERS      = '69789ce8d0ea881f4089a7fd';
 
-      <div class="quote-area">
-        <p id="quoteText">"ציטוט 1"</p>
-        <div class="author">— כותב 1</div>
-      </div>
-    </section>
+async function loadData(binId, key) {
+  try {
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${binId}`);
+    const d = await r.json();
+    return d.record[key] || (key === 'users' ? {} : []);
+  } catch(e) {
+    console.error(e);
+    return key === 'users' ? {} : [];
+  }
+}
 
-    <section class="complaint-section">
-      <h2 class="section-title">הגשת תלונה אנונימית</h2>
-      <div class="form-glass">
-        <form id="complaintForm">
-          <div class="form-group">
-            <label for="commanderName">שם המפקד</label>
-            <input type="text" id="commanderName" required>
-          </div>
-          <div class="form-group">
-            <label for="badgeNumber">מספר תג</label>
-            <input type="text" id="badgeNumber" required>
-          </div>
-          <div class="form-group">
-            <label for="subject">נושא התלונה</label>
-            <input type="text" id="subject" required>
-          </div>
-          <div class="form-group">
-            <label for="content">תוכן התלונה</label>
-            <textarea id="content" required></textarea>
-          </div>
-          <button type="submit" class="submit-btn">שלח תלונה אנונימית</button>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <img src="gen.png" alt="">
-    <p>© 2025–2026 | נבנה על ידי tomcupcake</p>
-  </footer>
-
-  <script>
-    const BIN_ID_COMPLAINTS = '69789c5d43b1c97be94e3c8b';
-    const BIN_ID_USERS = '69789ce8d0ea881f4089a7fd';
-
-    async function loadData(binId, key) {
-      try {
-        const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}`);
-        const bin = await res.json();
-        return bin.record[key] || [];
-      } catch (err) {
-        console.error("שגיאה בטעינה", err);
-        return [];
-      }
-    }
-
-    async function saveData(binId, key, data) {
-      try {
-        await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ [key]: data })
-        });
-      } catch (err) {
-        console.error("שגיאה בשמירה", err);
-      }
-    }
-
-    // Mobile burger
-    document.getElementById('burgerMenu')?.addEventListener('click', () => {
-      document.getElementById('mainNav').querySelector('ul').classList.toggle('active');
+async function saveData(binId, key, value) {
+  try {
+    await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ [key]: value })
     });
+  } catch(e) {
+    console.error(e);
+  }
+}
 
-    // Carousel + quotes
-    const slides = document.querySelectorAll('.slide');
-    const quoteEl = document.getElementById('quoteText');
-    const authorEl = document.querySelector('.quote-area .author');
-    const quotes = [
-      {q: '"ציטוט 1"', a: '— כותב 1'},
-      {q: '"ציטוט 2"', a: '— כותב 2'},
-      {q: '"ציטוט 3"', a: '— כותב 3'},
-      {q: '"ציטוט 4"', a: '— כותב 4'},
-      {q: '"ציטוט 5"', a: '— כותב 5'}
-    ];
-    let si = 0;
-    function rotateSlide() {
-      slides.forEach(s => s.classList.remove('active'));
-      slides[si].classList.add('active');
-      quoteEl.textContent = quotes[si].q;
-      authorEl.textContent = quotes[si].a;
-      si = (si + 1) % slides.length;
-    }
-    setInterval(rotateSlide, 5800);
-    rotateSlide();
+// ───────────────────────────────────────────────
+// Mobile burger
+document.addEventListener('DOMContentLoaded', () => {
+  const burger   = document.getElementById('burgerMenu');
+  const navUl    = document.querySelector('#mainNavUl');
 
-    // Auth + Greeting
-    let users = {};
-    let complaints = [];
-
-    const userGreeting = document.getElementById('userGreeting');
-
-    function getGreeting() {
-      const h = new Date().getHours();
-      if (h < 12) return 'בוקר';
-      if (h < 18) return 'צהריים';
-      return 'ערב';
-    }
-
-    function updateAuthUI(loggedIn = false, username = '', isAdmin = false) {
-      const loginItem = document.getElementById('loginItem');
-      const commandMenu = document.getElementById('commandMenu');
-      const adminMenu = document.getElementById('adminMenu');
-      const logoutMenu = document.getElementById('logoutMenu');
-
-      if (loggedIn) {
-        loginItem.style.display = 'none';
-        commandMenu.style.display = 'list-item';
-        logoutMenu.style.display = 'list-item';
-        adminMenu.style.display = isAdmin ? 'list-item' : 'none';
-        userGreeting.textContent = `${getGreeting()} טובים, ${username}`;
-      } else {
-        loginItem.style.display = 'list-item';
-        commandMenu.style.display = 'none';
-        adminMenu.style.display = 'none';
-        logoutMenu.style.display = 'none';
-        userGreeting.textContent = '';
-      }
-    }
-
-    // כפתור התחברות – פותח מודאל
-    const loginBtn = document.getElementById('loginBtn');
-    const loginModal = document.getElementById('loginModal');
-    const closeLogin = document.getElementById('closeLogin');
-    const loginForm = document.getElementById('loginForm');
-    const loginError = document.getElementById('loginError');
-
-    if (loginBtn) {
-      loginBtn.addEventListener('click', () => {
-        if (loginModal) loginModal.classList.add('active');
-      });
-    }
-
-    if (closeLogin) {
-      closeLogin.addEventListener('click', () => {
-        if (loginModal) loginModal.classList.remove('active');
-      });
-    }
-
-    if (loginForm) {
-      loginForm.addEventListener('submit', async e => {
-        e.preventDefault();
-        const username = document.getElementById('username')?.value.trim();
-        const password = document.getElementById('password')?.value;
-
-        if (!username || !password) {
-          if (loginError) loginError.textContent = "מלא שם משתמש וסיסמה";
-          return;
-        }
-
-        // בדיקה ראשונית – Artzy תמיד יתחבר
-        if (username === "Artzy" && password === "gili1&Dori2") {
-          localStorage.setItem("lspd_loggedIn", "true");
-          localStorage.setItem("lspd_currentUser", "Artzy");
-          updateAuthUI(true, "Artzy", true);
-          if (loginModal) loginModal.classList.remove('active');
-          if (loginError) loginError.textContent = '';
-          return;
-        }
-
-        // אם לא Artzy – בודקים מול JSONBin
-        users = await loadData(BIN_ID_USERS, 'users');
-
-        if (users[username] && users[username].password === password) {
-          localStorage.setItem("lspd_loggedIn", "true");
-          localStorage.setItem("lspd_currentUser", username);
-          updateAuthUI(true, username, users[username].isAdmin || false);
-          if (loginModal) loginModal.classList.remove('active');
-          if (loginError) loginError.textContent = '';
-        } else {
-          if (loginError) loginError.textContent = "שם משתמש או סיסמה שגויים";
-        }
-      });
-    }
-
-    if (document.getElementById('logoutBtn')) {
-      document.getElementById('logoutBtn').addEventListener('click', () => {
-        localStorage.removeItem("lspd_loggedIn");
-        localStorage.removeItem("lspd_currentUser");
-        updateAuthUI(false);
-        location.reload();
-      });
-    }
-
-    // Initial auth check
-    (async () => {
-      if (localStorage.getItem("lspd_loggedIn") === "true") {
-        const cu = localStorage.getItem("lspd_currentUser");
-        users = await loadData(BIN_ID_USERS, 'users');
-        if (users[cu] || cu === "Artzy") {
-          updateAuthUI(true, cu, (users[cu]?.isAdmin || cu === "Artzy"));
-        } else {
-          localStorage.removeItem("lspd_loggedIn");
-          localStorage.removeItem("lspd_currentUser");
-          updateAuthUI(false);
-        }
-      } else {
-        updateAuthUI(false);
-      }
-    })();
-
-    // Complaint form
-    document.getElementById('complaintForm')?.addEventListener('submit', async e => {
-      e.preventDefault();
-
-      const commander = document.getElementById('commanderName')?.value.trim();
-      const badge = document.getElementById('badgeNumber')?.value.trim();
-      const subject = document.getElementById('subject')?.value.trim();
-      const content = document.getElementById('content')?.value.trim();
-
-      if (!commander || !badge || !subject || !content) {
-        alert("מלא את כל השדות בבקשה");
-        return;
-      }
-
-      complaints = await loadData(BIN_ID_COMPLAINTS, 'complaints');
-
-      const newComplaint = {
-        id: Date.now(),
-        commander,
-        badge,
-        subject,
-        content,
-        date: new Date().toLocaleString('he-IL')
-      };
-
-      complaints.push(newComplaint);
-
-      await saveData(BIN_ID_COMPLAINTS, 'complaints', complaints);
-
-      alert("תלונה נשלחה בהצלחה!");
-      e.target.reset();
+  if (burger && navUl) {
+    burger.addEventListener('click', () => {
+      navUl.classList.toggle('active');
+      burger.textContent = navUl.classList.contains('active') ? '✕' : '☰';
     });
-  </script>
+  }
+});
+
+// ───────────────────────────────────────────────
+// Carousel + quotes
+const slides   = document.querySelectorAll('.slide');
+const quoteEl  = document.getElementById('quoteText');
+const authorEl = document.querySelector('.quote-area .author');
+const quotes = [
+  {q:"\"ציטוט 1\"", a:"— כותב 1"},
+  {q:"\"ציטוט 2\"", a:"— כותב 2"},
+  {q:"\"ציטוט 3\"", a:"— כותב 3"}
+];
+let si = 0;
+function rotate() {
+  slides.forEach(s=>s.classList.remove('active'));
+  slides[si].classList.add('active');
+  quoteEl.textContent  = quotes[si].q;
+  authorEl.textContent = quotes[si].a;
+  si = (si+1) % slides.length;
+}
+setInterval(rotate, 7000);
+rotate();
+
+// ───────────────────────────────────────────────
+// Auth
+let users = {};
+let currentUser = localStorage.getItem("lspd_currentUser");
+
+function updateUI() {
+  const logged = !!localStorage.getItem("lspd_loggedIn");
+  document.getElementById('loginItem').style.display       = logged ? 'none' : 'list-item';
+  document.getElementById('commandMenu').style.display     = logged ? 'list-item' : 'none';
+  document.getElementById('adminMenu').style.display       = (logged && currentUser === "Artzy") ? 'list-item' : 'none';
+  document.getElementById('logoutMenu').style.display      = logged ? 'list-item' : 'none';
+
+  if (logged && currentUser) {
+    document.getElementById('userGreeting').textContent = `${getGreeting()} טובים, ${currentUser}`;
+  } else {
+    document.getElementById('userGreeting').textContent = '';
+  }
+}
+
+const loginBtn   = document.getElementById('loginBtn');
+const loginModal = document.getElementById('loginModal');
+const closeLogin = document.getElementById('closeLogin');
+const loginForm  = document.getElementById('loginForm');
+const loginError = document.getElementById('loginError');
+
+loginBtn?.addEventListener('click',   () => loginModal?.classList.add('active'));
+closeLogin?.addEventListener('click', () => loginModal?.classList.remove('active'));
+
+loginForm?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const u = document.getElementById('username')?.value.trim();
+  const p = document.getElementById('password')?.value;
+
+  if (!u || !p) {
+    loginError.textContent = "מלא שם משתמש וסיסמה";
+    return;
+  }
+
+  // Hard-coded admin
+  if (u === "Artzy" && p === "gili1&Dori2") {
+    localStorage.setItem("lspd_loggedIn", "true");
+    localStorage.setItem("lspd_currentUser", "Artzy");
+    updateUI();
+    loginModal?.classList.remove('active');
+    loginError.textContent = '';
+    return;
+  }
+
+  // JSONBin users
+  users = await loadData(BIN_ID_USERS, 'users');
+
+  if (users[u] && users[u].password === p) {
+    localStorage.setItem("lspd_loggedIn", "true");
+    localStorage.setItem("lspd_currentUser", u);
+    updateUI();
+    loginModal?.classList.remove('active');
+    loginError.textContent = '';
+  } else {
+    loginError.textContent = "שם משתמש או סיסמה שגויים";
+  }
+});
+
+document.getElementById('logoutBtn')?.addEventListener('click', () => {
+  localStorage.removeItem("lspd_loggedIn");
+  localStorage.removeItem("lspd_currentUser");
+  updateUI();
+  location.href = "index.html";
+});
+
+// Initial check
+updateUI();
+
+// Complaint form
+document.getElementById('complaintForm')?.addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const commander = document.getElementById('commanderName')?.value.trim();
+  const badge     = document.getElementById('badgeNumber')?.value.trim();
+  const subject   = document.getElementById('subject')?.value.trim();
+  const content   = document.getElementById('content')?.value.trim();
+
+  if (!commander || !badge || !subject || !content) {
+    alert("מלא את כל השדות בבקשה");
+    return;
+  }
+
+  let complaints = await loadData(BIN_ID_COMPLAINTS, 'complaints');
+
+  complaints.push({
+    id: Date.now(),
+    commander,
+    badge,
+    subject,
+    content,
+    date: new Date().toLocaleString('he-IL')
+  });
+
+  await saveData(BIN_ID_COMPLAINTS, 'complaints', complaints);
+
+  alert("תלונה נשלחה בהצלחה!");
+  e.target.reset();
+});
+
+function getGreeting() {
+  const h = new Date().getHours();
+  return h < 12 ? 'בוקר' : h < 18 ? 'צהריים' : 'ערב';
+}
+</script>
 </body>
 </html>
