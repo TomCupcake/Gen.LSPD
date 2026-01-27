@@ -1,0 +1,418 @@
+/* ==========================================
+   LSPD Roleplay – Modern 2026 Design (Updated Jan 2026)
+   Clean, Tactical, Authoritative – Centered fixes
+   ========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Rubik', system-ui, -apple-system, sans-serif;
+  direction: rtl;
+  background: #0a0c10;
+  color: #e9ecef;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0f1117;
+}
+::-webkit-scrollbar-thumb {
+  background: #2d3748;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4a5568;
+}
+
+/* ── Navbar – Centered + fixed width ── */
+.navbar {
+  background: rgba(15, 18, 25, 0.92) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+  transition: all 0.4s ease;
+}
+
+.navbar .container {
+  max-width: 1400px;          /* רוחב מקסימלי נוח יותר */
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.navbar-brand {
+  font-weight: 600;
+}
+
+.navbar-brand img {
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+}
+
+.nav-link {
+  font-weight: 500;
+  color: #cbd5e1 !important;
+  transition: all 0.25s ease;
+  position: relative;
+  padding: 0.6rem 1.1rem !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #60a5fa !important;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 6px;
+  right: 50%;
+  background: #60a5fa;
+  transition: all 0.35s ease;
+  transform: translateX(50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 70%;
+}
+
+/* ── Hero – Stronger centering + vertical alignment ── */
+.hero {
+  height: 100vh;
+  min-height: 880px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero .carousel,
+.hero .carousel-inner,
+.hero .carousel-item,
+.hero .carousel-item img {
+  height: 100% !important;
+  width: 100%;
+}
+
+.carousel-item img {
+  object-fit: cover;
+  filter: brightness(0.75) contrast(1.08);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,12,16,0.25) 0%, rgba(10,12,16,0.88) 65%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.hero-text-bg {
+  background: rgba(15,18,25,0.78);
+  backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(96,165,250,0.14);
+  border-radius: 1.1rem;
+  padding: 3.5rem 5rem;
+  box-shadow: 0 20px 70px rgba(0,0,0,0.65);
+  max-width: 960px;
+  width: 88%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.hero-text-bg h1 {
+  font-size: clamp(3.2rem, 8vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -1.8px;
+  background: linear-gradient(90deg, #e2e8f0, #cbd5e1, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.7);
+  margin-bottom: 1.2rem;
+  line-height: 1.05;
+}
+
+.hero-text-bg .lead {
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-weight: 400;
+  color: #cbd5e1;
+  margin-bottom: 1.5rem;
+}
+
+.hero-text-bg p.fst-italic {
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  color: #94a3b8;
+  margin: 1.5rem 0 0;
+}
+
+/* General section padding after fixed navbar */
+main {
+  padding-top: 100px;   /* מרווח מתחת ל-nav fixed */
+}
+
+/* Cards, tables, images – no change needed here for your issues */
+.bg-dark-transparent,
+.card {
+  background: rgba(20, 25, 35, 0.82);
+  backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgba(96,165,250,0.12);
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.bg-dark-transparent:hover,
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+}
+
+/* Sub nav – still pill shaped, centered */
+.sub-nav .navbar {
+  background: rgba(20,25,35,0.9) !important;
+  border: 1px solid rgba(96,165,250,0.18);
+  border-radius: 999px;
+  padding: 0.4rem 2rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  max-width: fit-content;
+  margin: 0 auto;
+}
+
+/* Footer */
+footer {
+  background: #05070b;
+  border-top: 1px solid rgba(96,165,250,0.1);
+  padding: 4rem 0 2.5rem;
+  color: #94a3b8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .hero-text-bg {
+    padding: 2.8rem 3rem;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 760px;
+  }
+  .hero-text-bg {
+    padding: 2.2rem 1.8rem;
+  }
+  .hero-text-bg h1 {
+    font-size: 2.8rem;
+  }
+  .hero-text-bg .lead {
+    font-size: 1.35rem;
+  }
+  main {
+    padding-top: 90px;
+  }
+  .navbar .container {
+    padding: 0 1rem;
+  }
+}
+.carousel-item .carousel-caption-custom {
+  opacity: 0;
+  transform: translateX(-50%) translateY(20px);
+  transition: all 0.9s ease-out;
+}
+
+.carousel-item.active .carousel-caption-custom {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.quote-top {
+  position: absolute;
+  top: 5%;                    /* מרחק מהחלק העליון – שנה ל-3%–8% לפי הצורך */
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 0 1rem;
+  pointer-events: none;
+}
+
+.quote-top .quote {
+  font-size: 2.1rem;          /* גודל הציטוט – התאם לטעמך */
+  font-weight: 500;
+  line-height: 1.35;
+  color: white;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.85);   /* חשוב מאוד לקריאות */
+  margin-bottom: 0.35rem;
+}
+
+.quote-top .author {
+  font-size: 1.25rem;         /* קטן יותר */
+  font-weight: 400;
+  color: white;
+  opacity: 0.94;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+/* התאמה לטלפונים */
+@media (max-width: 768px) {
+  .quote-top {
+    top: 4%;
+  }
+  .quote-top .quote {
+    font-size: 1.55rem;
+  }
+  .quote-top .author {
+    font-size: 1.05rem;
+  }
+}
+/* ── Login & Complaint Form Enhancements ── */
+.bg-secondary {
+  background-color: #2d3748 !important;
+}
+.border-secondary {
+  border-color: #4a5568 !important;
+}
+.btn-outline-primary {
+  transition: all 0.3s;
+}
+.btn-outline-primary:hover {
+  background: #60a5fa22;
+}
+.btn-outline-danger:hover {
+  background: #f8717122;
+}
+
+/* Modal dark theme fix */
+.modal-content {
+  background: #111827 !important;
+}
+.modal-header, .modal-footer {
+  border-color: #374151 !important;
+}
+.btn-close-white {
+  filter: invert(1);
+}
+
+/* Complaint section */
+.bg-dark-transparent {
+  background: rgba(20,25,35,0.82);
+  backdrop-filter: blur(14px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(96,165,250,0.12);
+}
+/* ── Admin & Command pages specific ── */
+.card.bg-dark-transparent {
+  background: rgba(20, 25, 35, 0.82);
+  backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgba(96,165,250,0.12);
+  transition: transform 0.25s ease;
+}
+
+.card.bg-dark-transparent:hover {
+  transform: translateY(-4px);
+}
+
+.table-dark th,
+.table-dark td {
+  border-color: #374151;
+}
+
+.btn-sm {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.65rem;
+}
+
+/* טבלה יותר נקייה */
+.table-hover tbody tr:hover {
+  background-color: rgba(96,165,250,0.08) !important;
+}
+/* ────────────────────────────────────────────────
+   שיפור קריאות בדפי command + admin (רקע כהה מאוד)
+   ──────────────────────────────────────────────── */
+
+/* כללי – טקסט בהיר יותר בכל הדפים הכהים */
+main, 
+.container, 
+.card-body, 
+.table-dark th, 
+.table-dark td,
+.form-label,
+.text-muted:not(.small) {
+  color: #e2e8f0 !important;   /* אפור-לבן בהיר מאוד, קריא מאוד על רקע כהה */
+}
+
+/* כותרות ראשיות ומשניות */
+h1, h2, h3, h4, h5, h6 {
+  color: #cbd5e1 !important;   /* אפור בהיר-כסוף, נראה טוב יותר מהלבן הטהור */
+}
+
+/* כותרות בדף אדמין + פיקוד */
+main h1 {
+  color: #60a5fa !important;   /* כחול בהיר כמו הניווט – בולט ויפה */
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+main h3 {
+  color: #94a3b8 !important;   /* אפור-כחלחל רך */
+}
+
+/* טבלה באדמין פאנל */
+.table-dark {
+  --bs-table-color: #e2e8f0;          /* טקסט רגיל */
+  --bs-table-bg: #1e293b;             /* רקע שורה כהה יותר אבל לא שחור מוחלט */
+  --bs-table-accent-bg: #334155;      /* hover/zebra */
+  --bs-table-striped-color: #e2e8f0;
+  --bs-table-striped-bg: #1e293b;
+  --bs-table-hover-color: #f1f5f9;
+  --bs-table-hover-bg: #475569;
+}
+
+.table-dark th {
+  background-color: #0f172a !important;  /* כהה יותר לכותרות טבלה */
+  color: #60a5fa !important;             /* כחול לכותרות */
+}
+
+/* תוויות (labels) בטופס הוספת משתמש */
+.form-label {
+  color: #cbd5e1 !important;
+  font-weight: 500;
+}
+
+/* טקסט מודגש / strong בתוך כרטיסים */
+.card-body strong,
+.card-header strong {
+  color: #f1f5f9 !important;
+}
+
+/* טקסט "אין תלונות" וכו' */
+.text-muted {
+  color: #94a3b8 !important;   /* אפור רך יותר, לא כמעט שחור */
+}
+
+/* footer – כבר בהיר יחסית, אבל לוודא */
+footer p, footer .text-muted {
+  color: #94a3b8 !important;
+}
+
+/* אם יש badge או כפתורים קטנים */
+.badge.bg-secondary {
+  color: #e2e8f0 !important;
+}

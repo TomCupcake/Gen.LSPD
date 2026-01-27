@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LSPD - יחידת הפטרול</title>
+  <link rel="icon" href="Patrol.png" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="design.css">
+</head>
+<body>
+
+  <!-- Main Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+      <img src="LSPD.png" alt="LSPD" width="48" class="me-2 rounded-circle">
+      LSPD
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- ברכה אישית – משמאל (בגלל rtl) -->
+      <div id="greeting" class="navbar-text me-4 d-none text-light fw-medium">
+        בוקר טוב, <strong id="currentUserName"></strong>!
+      </div>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">ראשי</a></li>
+
+        <!-- דוגמה – שנה לפי הדף הספציפי -->
+        <li class="nav-item"><a class="nav-link" href="roster.html">רוסטר</a></li>
+        <li class="nav-item"><a class="nav-link" href="policeprocedures.html">נהלים</a></li>
+        <li class="nav-item"><a class="nav-link" href="Patrol.html">פטרול</a></li>
+        <li class="nav-item"><a class="nav-link" href="Detective.html">דיטקטיב</a></li>
+        <li class="nav-item"><a class="nav-link" href="SWAT.html">סוואט</a></li>
+
+        <!-- קישורים שמופיעים רק למחוברים -->
+        <li class="nav-item d-none" id="commandMenu">
+          <a class="nav-link" href="command.html">מידע לפיקוד</a>
+        </li>
+        <li class="nav-item d-none" id="adminMenu">
+          <a class="nav-link" href="admin.html">אדמין פאנל</a>
+        </li>
+
+        <!-- כפתור התחברות / התנתקות -->
+        <li class="nav-item">
+          <button id="loginBtn" class="btn btn-outline-primary ms-3">התחברות</button>
+        </li>
+        <li class="nav-item d-none" id="logoutMenu">
+          <button id="logoutBtn" class="btn btn-outline-danger ms-3">התנתק</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- Patrol Sub-Navbar -->
+  <div class="sub-nav bg-dark py-3 mt-5">
+    <div class="container">
+      <nav class="navbar navbar-expand-sm navbar-dark rounded-pill mx-auto shadow" style="background-color: #353c42; max-width: fit-content;">
+        <div class="container-fluid justify-content-center px-4">
+          <img src="Patrol.png" alt="Patrol Unit" width="48" class="me-3 rounded-circle">
+          <ul class="navbar-nav small">
+            <li class="nav-item"><a class="nav-link px-4" href="Patrol.html">דף הבית פטרול</a></li>
+            <li class="nav-item"><a class="nav-link px-4" href="pws.html">לוח זמנים שבועי</a></li>
+            <li class="nav-item"><a class="nav-link px-4" href="uniformandgear.html">מדים וציוד</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="patrol-page pt-5">
+    <div class="container py-5">
+      <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-white mb-3">יחידת הפטרול</h1>
+        <p class="lead text-white-75 fs-4">
+          קו המגע הראשון – נוכחות, אכיפה ותגובה מיידית בכל רחבי לוס סנטוס
+        </p>
+        <div class="divider mx-auto my-4"></div>
+      </div>
+
+      <div class="patrol-section card bg-dark-transparent shadow-lg border-0 mb-5">
+        <div class="card-body p-5">
+          <h4 class="fw-bold text-primary mb-4">אודות היחידה</h4>
+          <p class="fs-5" style="color:#ffffff">
+            יחידת הפטרול היא יחידת הליבה המבצעית של Los Santos Police Department ומהווה את קו המגע הראשון עם המרחב העירוני.<br>
+            היחידה אחראית על נוכחות משטרתית רציפה, אכיפה יומיומית, תגובה לקריאות חירום וניהול ראשוני של אירועים בכל מחוזות העיר.
+          </p>
+
+          <hr class="my-5 border-secondary">
+
+          <h4 class="fw-bold text-primary mb-4">ייעוד ומטרות</h4>
+          <ul class="list-unstyled fs-5">
+            <li style="color:#ffffff">✦ שמירה על החוק והסדר</li>
+            <li style="color:#ffffff">✦ נוכחות מונעת והרתעת פשיעה</li>
+            <li style="color:#ffffff">✦ תגובה מיידית לקריאות</li>
+            <li style="color:#ffffff">✦ אבטחת אזרחים ורכוש</li>
+            <li style="color:#ffffff">✦ ייצוב אירועים והעברתם ליחידות מתמחות</li>
+            <li style="color:#ffffff">✦ ייצוג המשטרה בפני הציבור</li>
+          </ul>
+
+          <hr class="my-5 border-secondary">
+
+          <h4 class="fw-bold text-primary mb-4">תחומי סמכות</h4>
+          <p class="fs-5">שוטר פטרול מוסמך:</p>
+          <ul class="list-unstyled fs-5">
+            <li style="color:#ffffff">✦ לעכב, לחקור ולעצור חשודים</li>
+            <li style="color:#ffffff">✦ לבצע חיפוש בהתאם לחוק</li>
+            <li style="color:#ffffff">✦ להשתמש באמצעי ריסון ונטרול</li>
+            <li style="color:#ffffff">✦ להפעיל שיקול דעת מבצעי עצמאי</li>
+            <li style="color:#ffffff">✦ לנהל אירוע עד העברת פיקוד</li>
+          </ul>
+
+          <hr class="my-5 border-secondary">
+
+          <h4 class="fw-bold text-primary mb-4">סוגי פעילות מבצעית של היחידה</h4>
+          <ul class="list-unstyled fs-5">
+            <li style="color:#ffffff">✦ סיור שגרתי</li>
+            <li style="color:#ffffff">✦ סיור יזום</li>
+            <li style="color:#ffffff">✦ תגובה לקריאות מוקד</li>
+            <li style="color:#ffffff">✦ טיפול בעבירות תנועה</li>
+            <li style="color:#ffffff">✦ טיפול בעבירות פליליות</li>
+            <li style="color:#ffffff">✦ אבטחת זירות</li>
+            <li style="color:#ffffff">✦ גיבוי ליחידות</li>
+            <li style="color:#ffffff">✦ ניהול אירוע ראשוני</li>
+          </ul>
+
+          <hr class="my-5 border-secondary">
+
+          <h4 class="fw-bold text-primary mb-4">עבודה עם יחידות אחרות</h4>
+          <ul class="list-unstyled fs-5">
+            <li style="color:#ffffff">✦ מסירת פיקוד מסודרת</li>
+            <li style="color:#ffffff">✦ פעולה תחת מפקד אירוע</li>
+            <li style="color:#ffffff">✦ סיוע ואבטחה לפי צורך</li>
+            <li style="color:#ffffff">✦ העברת מודיעין ראשוני</li>
+          </ul>
+
+          <hr class="my-5 border-secondary">
+
+          <h4 class="fw-bold text-primary mb-4">התנהלות מול אזרחים</h4>
+          <ul class="list-unstyled fs-5">
+            <li style="color:#ffffff">✦ הזדהות מלאה</li>
+            <li style="color:#ffffff">✦ דיבור מקצועי ומכבד</li>
+            <li style="color:#ffffff">✦ שמירה על זכויות האזרח</li>
+            <li style="color:#ffffff">✦ שימוש בסמכות ללא הסלמה</li>
+            <li style="color:#ffffff">✦ מתן שירות הוגן ושקוף</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-5 mt-5">
+    <div class="container">
+      <img src="gen.png" alt="Gen" width="60" class="mb-3 rounded-circle">
+      <p class="mb-2">© 2025–2026 | האתר נבנה על ידי tomcupcake</p>
+    </div>
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ────────────────────────────────────────────────
+// נתונים בסיסיים
+// ────────────────────────────────────────────────
+const ADMIN_USERNAME = "Artzy";
+const ADMIN_PASSWORD = "gili1&Dori2";
+
+// טעינת משתמשים (אם לא קיימים – יוצר את ארטזי)
+let users = JSON.parse(localStorage.getItem("lspd_users")) || {};
+if (!users[ADMIN_USERNAME]) {
+  users[ADMIN_USERNAME] = { password: ADMIN_PASSWORD, isAdmin: true };
+  localStorage.setItem("lspd_users", JSON.stringify(users));
+}
+
+// ────────────────────────────────────────────────
+// פונקציות עזר
+// ────────────────────────────────────────────────
+function isLoggedIn() {
+  return localStorage.getItem("lspd_loggedIn") === "true";
+}
+
+function getCurrentUser() {
+  return localStorage.getItem("lspd_currentUser");
+}
+
+function isAdmin() {
+  const user = getCurrentUser();
+  return user && users[user]?.isAdmin === true;
+}
+
+function updateNavbarAndGreeting() {
+  const logged = isLoggedIn();
+  const user = getCurrentUser();
+
+  // כפתורים
+  document.getElementById("loginBtn")?.classList.toggle("d-none", logged);
+  document.getElementById("logoutMenu")?.classList.toggle("d-none", !logged);
+  document.getElementById("commandMenu")?.classList.toggle("d-none", !logged);
+  document.getElementById("adminMenu")?.classList.toggle("d-none", !isAdmin());
+
+  // ברכה אישית
+  const greetingEl = document.getElementById("greeting");
+  const nameEl = document.getElementById("currentUserName");
+
+  if (greetingEl && nameEl) {
+    if (logged && user) {
+      const hour = new Date().getHours();
+      let txt = hour >= 5 && hour < 12 ? "בוקר טוב" :
+                hour >= 12 && hour < 17 ? "צהריים טובים" :
+                hour >= 17 && hour < 21 ? "ערב טוב" : "לילה טוב";
+
+      nameEl.textContent = user;
+      greetingEl.innerHTML = `${txt}, <strong>${user}</strong>!`;
+      greetingEl.classList.remove("d-none");
+    } else {
+      greetingEl.classList.add("d-none");
+    }
+  }
+}
+
+// ────────────────────────────────────────────────
+// התחברות
+// ────────────────────────────────────────────────
+document.getElementById("loginBtn")?.addEventListener("click", () => {
+  new bootstrap.Modal(document.getElementById("loginModal")).show();
+});
+
+document.getElementById("loginForm")?.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const username = document.getElementById("username")?.value.trim();
+  const password = document.getElementById("password")?.value;
+  const error = document.getElementById("loginError");
+
+  if (users[username] && users[username].password === password) {
+    localStorage.setItem("lspd_loggedIn", "true");
+    localStorage.setItem("lspd_currentUser", username);
+    updateNavbarAndGreeting();
+    bootstrap.Modal.getInstance(document.getElementById("loginModal"))?.hide();
+    error.textContent = "";
+  } else {
+    error.textContent = "שם משתמש או סיסמה שגויים";
+  }
+});
+
+// ────────────────────────────────────────────────
+// התנתקות
+// ────────────────────────────────────────────────
+document.getElementById("logoutBtn")?.addEventListener("click", () => {
+  localStorage.removeItem("lspd_loggedIn");
+  localStorage.removeItem("lspd_currentUser");
+  updateNavbarAndGreeting();
+  location.href = "index.html"; // או רק רענון אם רוצים
+});
+
+// ────────────────────────────────────────────────
+// טעינה ראשונית
+// ────────────────────────────────────────────────
+updateNavbarAndGreeting();
+</script>
+</body>
+</html>

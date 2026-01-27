@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LSPD - נהלים מיוחדים | סוואט</title>
+  <link rel="icon" href="SWAT.png" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="design.css">
+</head>
+<body>
+
+  <!-- Main Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+      <img src="LSPD.png" alt="LSPD" width="48" class="me-2 rounded-circle">
+      LSPD
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- ברכה אישית – משמאל (בגלל rtl) -->
+      <div id="greeting" class="navbar-text me-4 d-none text-light fw-medium">
+        בוקר טוב, <strong id="currentUserName"></strong>!
+      </div>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">ראשי</a></li>
+
+        <!-- דוגמה – שנה לפי הדף הספציפי -->
+        <li class="nav-item"><a class="nav-link" href="roster.html">רוסטר</a></li>
+        <li class="nav-item"><a class="nav-link" href="policeprocedures.html">נהלים</a></li>
+        <li class="nav-item"><a class="nav-link" href="Patrol.html">פטרול</a></li>
+        <li class="nav-item"><a class="nav-link" href="Detective.html">דיטקטיב</a></li>
+        <li class="nav-item"><a class="nav-link" href="SWAT.html">סוואט</a></li>
+
+        <!-- קישורים שמופיעים רק למחוברים -->
+        <li class="nav-item d-none" id="commandMenu">
+          <a class="nav-link" href="command.html">מידע לפיקוד</a>
+        </li>
+        <li class="nav-item d-none" id="adminMenu">
+          <a class="nav-link" href="admin.html">אדמין פאנל</a>
+        </li>
+
+        <!-- כפתור התחברות / התנתקות -->
+        <li class="nav-item">
+          <button id="loginBtn" class="btn btn-outline-primary ms-3">התחברות</button>
+        </li>
+        <li class="nav-item d-none" id="logoutMenu">
+          <button id="logoutBtn" class="btn btn-outline-danger ms-3">התנתק</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <!-- SWAT Sub-Navbar -->
+  <div class="sub-nav py-3 mt-5" style="background: rgba(0,0,0,0.92); backdrop-filter: blur(8px);">
+    <div class="container">
+      <nav class="navbar navbar-expand-sm navbar-dark rounded-pill mx-auto shadow" style="background: #2b2f33; max-width: fit-content; border: 1px solid #6c757d;">
+        <div class="container-fluid justify-content-center px-4">
+          <img src="SWAT.png" alt="SWAT Unit" width="48" class="me-3 rounded-circle">
+          <ul class="navbar-nav small">
+            <li class="nav-item"><a class="nav-link px-4" href="SWAT.html">דף הבית סוואט</a></li>
+            <li class="nav-item"><a class="nav-link px-4" href="SWATung.html">מדים וציוד</a></li>
+            <li class="nav-item"><a class="nav-link active px-4" href="SWATpc.html">נהלים מיוחדים</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="swat-page pt-5">
+    <div class="container py-5">
+      <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3" style="color: #6c757d;">נהלים מיוחדים - יחידת הסוואט</h1>
+        <p class="lead fs-4" style="color: #adb5bd;">
+          תגובה מדויקת • שליטה מלאה • ביטחון מקסימלי
+        </p>
+        <div class="divider mx-auto my-4" style="background: linear-gradient(90deg, transparent, #6c757d, transparent);"></div>
+      </div>
+
+      <div class="swat-card card bg-dark-transparent shadow-lg border-0 mb-5" style="border: 1px solid #6c757d;">
+        <div class="card-body p-4 p-md-5">
+          <h4 class="fw-bold mb-4" style="color: #6c757d;">קריטריונים להפעלה</h4>
+          <ul class="list-unstyled fs-5 text-white-75 mb-5">
+            <li style="color: #adb5bd;">1. חשוד חמוש ומסוכן</li>
+            <li style="color: #adb5bd;">2. בני ערובה</li>
+            <li style="color: #adb5bd;">3. מצור או התבצרות</li>
+            <li style="color: #adb5bd;">4. פעולת מעצר של עבריינים מסוכנים</li>
+            <li style="color: #adb5bd;">5. איומי טרור</li>
+            <li style="color: #adb5bd;">6. חשד לפצצות</li>
+          </ul>
+
+          <hr class="my-5" style="border-color: #495057;">
+
+          <h4 class="fw-bold mb-4" style="color: #6c757d;">ניהול פריצה ולחימה בשטח בנוי (לש"ב)</h4>
+
+          <h5 class="fw-bold mb-3" style="color: #adb5bd;">שלבי פריצה:</h5>
+          <ul class="list-unstyled fs-5 text-white-75 mb-4">
+            <li style="color: #adb5bd;">✦ סיור שטח ומודיעין</li>
+            <li style="color: #adb5bd;">✦ קביעת תפקידים בצוות (פריצה, חיפוי, שמירה אחורנית)</li>
+            <li style="color: #adb5bd;">✦ שימוש באמצעים לא קטלניים (פלאש, גז), תלוי בגודל החדר/מקום</li>
+          </ul>
+
+          <h5 class="fw-bold mb-3" style="color: #adb5bd;">כללי ירי בלש"ב:</h5>
+          <ul class="list-unstyled fs-5 text-white-75 mb-5">
+            <li style="color: #adb5bd;">✦ זיהוי חיובי של חשוד</li>
+            <li style="color: #adb5bd;">✦ הימנעות מירי מקרי על בני ערובה</li>
+          </ul>
+
+          <hr class="my-5" style="border-color: #495057;">
+
+          <h5 class="fw-bold mb-3" style="color: #adb5bd;">נהלי בני ערובה:</h5>
+          <ul class="list-unstyled fs-5 text-white-75 mb-5">
+            <li style="color: #adb5bd;">✦ עדיפות למו"מ על ידי יחידת הסוואט / דיטקטיב</li>
+            <li style="color: #adb5bd;">✦ חדירה באישור מנהל אירוע / טקטי בלבד (במקרה של שבירת מו"מ)</li>
+            <li style="color: #adb5bd;">✦ צלפים בפריסה חיצונית (באישור מנהל אירוע בלבד), לצורך סריקת שטחים וביטחון</li>
+          </ul>
+
+          <hr class="my-5" style="border-color: #495057;">
+
+          <h5 class="fw-bold mb-3" style="color: #adb5bd;">נהלי תיעוד ושקיפות:</h5>
+          <ul class="list-unstyled fs-5 text-white-75">
+            <li style="color: #adb5bd;">✦ מצלמות גוף (חובה לפעול בזמן משימות, אלא אם כן מדובר במצב סמוי)</li>
+            <li style="color: #adb5bd;">✦ תיעוד כל שלב מבצעי בדוחות מבצעיים</li>
+            <li style="color: #adb5bd;">✦ סקירה לאחר מבצע, בדיקת תקינות / תחקיר של דיטקטיבים</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-center py-5 mt-5" style="border-top: 2px solid #6c757d;">
+    <div class="container">
+      <img src="gen.png" alt="Gen" width="60" class="mb-3 rounded-circle">
+      <p class="mb-2 text-white">© 2025–2026 | האתר נבנה על ידי tomcupcake</p>
+    </div>
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ────────────────────────────────────────────────
+// נתונים בסיסיים
+// ────────────────────────────────────────────────
+const ADMIN_USERNAME = "Artzy";
+const ADMIN_PASSWORD = "gili1&Dori2";
+
+// טעינת משתמשים (אם לא קיימים – יוצר את ארטזי)
+let users = JSON.parse(localStorage.getItem("lspd_users")) || {};
+if (!users[ADMIN_USERNAME]) {
+  users[ADMIN_USERNAME] = { password: ADMIN_PASSWORD, isAdmin: true };
+  localStorage.setItem("lspd_users", JSON.stringify(users));
+}
+
+// ────────────────────────────────────────────────
+// פונקציות עזר
+// ────────────────────────────────────────────────
+function isLoggedIn() {
+  return localStorage.getItem("lspd_loggedIn") === "true";
+}
+
+function getCurrentUser() {
+  return localStorage.getItem("lspd_currentUser");
+}
+
+function isAdmin() {
+  const user = getCurrentUser();
+  return user && users[user]?.isAdmin === true;
+}
+
+function updateNavbarAndGreeting() {
+  const logged = isLoggedIn();
+  const user = getCurrentUser();
+
+  // כפתורים
+  document.getElementById("loginBtn")?.classList.toggle("d-none", logged);
+  document.getElementById("logoutMenu")?.classList.toggle("d-none", !logged);
+  document.getElementById("commandMenu")?.classList.toggle("d-none", !logged);
+  document.getElementById("adminMenu")?.classList.toggle("d-none", !isAdmin());
+
+  // ברכה אישית
+  const greetingEl = document.getElementById("greeting");
+  const nameEl = document.getElementById("currentUserName");
+
+  if (greetingEl && nameEl) {
+    if (logged && user) {
+      const hour = new Date().getHours();
+      let txt = hour >= 5 && hour < 12 ? "בוקר טוב" :
+                hour >= 12 && hour < 17 ? "צהריים טובים" :
+                hour >= 17 && hour < 21 ? "ערב טוב" : "לילה טוב";
+
+      nameEl.textContent = user;
+      greetingEl.innerHTML = `${txt}, <strong>${user}</strong>!`;
+      greetingEl.classList.remove("d-none");
+    } else {
+      greetingEl.classList.add("d-none");
+    }
+  }
+}
+
+// ────────────────────────────────────────────────
+// התחברות
+// ────────────────────────────────────────────────
+document.getElementById("loginBtn")?.addEventListener("click", () => {
+  new bootstrap.Modal(document.getElementById("loginModal")).show();
+});
+
+document.getElementById("loginForm")?.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const username = document.getElementById("username")?.value.trim();
+  const password = document.getElementById("password")?.value;
+  const error = document.getElementById("loginError");
+
+  if (users[username] && users[username].password === password) {
+    localStorage.setItem("lspd_loggedIn", "true");
+    localStorage.setItem("lspd_currentUser", username);
+    updateNavbarAndGreeting();
+    bootstrap.Modal.getInstance(document.getElementById("loginModal"))?.hide();
+    error.textContent = "";
+  } else {
+    error.textContent = "שם משתמש או סיסמה שגויים";
+  }
+});
+
+// ────────────────────────────────────────────────
+// התנתקות
+// ────────────────────────────────────────────────
+document.getElementById("logoutBtn")?.addEventListener("click", () => {
+  localStorage.removeItem("lspd_loggedIn");
+  localStorage.removeItem("lspd_currentUser");
+  updateNavbarAndGreeting();
+  location.href = "index.html"; // או רק רענון אם רוצים
+});
+
+// ────────────────────────────────────────────────
+// טעינה ראשונית
+// ────────────────────────────────────────────────
+updateNavbarAndGreeting();
+</script>
+</body>
+</html>

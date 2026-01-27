@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>מידע לפיקוד - LSPD</title>
+  <link rel="icon" href="LSPD.png" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="design.css">
+</head>
+<body>
+
+  <!-- Navbar (כמו ב-index, אבל עם התאמות) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="LSPD.png" alt="LSPD" width="48" class="me-2 rounded-circle">
+        LSPD
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">ראשי</a></li>
+          <li class="nav-item"><a class="nav-link active" href="command.html">מידע לפיקוד</a></li>
+          <li class="nav-item d-none" id="adminMenu">
+            <a class="nav-link" href="admin.html">אדמין פאנל</a>
+          </li>
+          <li class="nav-item" id="logoutMenu">
+            <button id="logoutBtn" class="btn btn-outline-danger ms-3">התנתק</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-5 mt-5">
+    <div class="container py-5">
+      <h1 class="text-center mb-5 text-primary">מידע לפיקוד – תלונות אנונימיות</h1>
+
+      <div id="complaintsList" class="row g-4"></div>
+
+      <div id="noComplaints" class="text-center text-muted fs-4 py-5 d-none">
+        אין תלונות חדשות כרגע.
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-dark text-white text-center py-4 mt-auto">
+    <div class="container">
+      <img src="gen.png" alt="Gen" width="60" class="mb-3 rounded-circle">
+      <p class="mb-1">© 2025–2026 | האתר נבנה על ידי tomcupcake</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const complaints = JSON.parse(localStorage.getItem("lspd_complaints")) || [];
+      const listEl = document.getElementById("complaintsList");
+      const noComplaintsEl = document.getElementById("noComplaints");
+
+      if (complaints.length === 0) {
+        noComplaintsEl.classList.remove("d-none");
+        return;
+      }
+
+      complaints.forEach(comp => {
+        const card = document.createElement("div");
+        card.className = "col-lg-6 col-xl-4";
+        card.innerHTML = `
+          <div class="card bg-dark-transparent text-white border border-secondary h-100 shadow">
+            <div class="card-header bg-dark border-secondary d-flex justify-content-between align-items-center">
+              <strong>${comp.subject}</strong>
+              <small class="text-muted">${comp.date}</small>
+            </div>
+            <div class="card-body">
+              <p class="mb-2"><strong>שם המפקד:</strong> ${comp.commander}</p>
+              <p class="mb-2"><strong>מספר תג:</strong> ${comp.badge}</p>
+              <p class="mb-3"><strong>תוכן:</strong><br>${comp.content.replace(/\n/g, "<br>")}</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 text-end">
+              <button class="btn btn-sm btn-danger delete-complaint" data-id="${comp.id}">
+                מחק תלונה
+              </button>
+            </div>
+          </div>
+        `;
+        listEl.appendChild(card);
+      });
+
+      // מחיקת תלונה
+      document.querySelectorAll(".delete-complaint").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (!confirm("בטוח למחוק את התלונה הזו?")) return;
+          const id = Number(btn.dataset.id);
+          const updated = complaints.filter(c => c.id !== id);
+          localStorage.setItem("lspd_complaints", JSON.stringify(updated));
+          location.reload();
+        });
+      });
+
+      // הגנת דף + ניהול navbar
+      if (localStorage.getItem("lspd_loggedIn") !== "true") {
+        alert("עליך להתחבר כדי לגשת לאזור זה");
+        location.href = "index.html";
+      }
+
+      const isAdmin = () => {
+        const user = localStorage.getItem("lspd_currentUser");
+        const users = JSON.parse(localStorage.getItem("lspd_users")) || {};
+        return user && users[user]?.isAdmin;
+      };
+
+      document.getElementById("adminMenu")?.classList.toggle("d-none", !isAdmin());
+      document.getElementById("logoutBtn")?.addEventListener("click", () => {
+        localStorage.removeItem("lspd_loggedIn");
+        localStorage.removeItem("lspd_currentUser");
+        location.href = "index.html";
+      });
+    });
+  </script>
+</body>
+</html>
