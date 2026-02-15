@@ -28,10 +28,51 @@
           <li class="nav-item"><a class="nav-link" href="Patrol.html">פטרול</a></li>
           <li class="nav-item"><a class="nav-link" href="Detective.html">דיטקטיב</a></li>
           <li class="nav-item"><a class="nav-link" href="SWAT.html">סוואט</a></li>
+          <li class="nav-item">
+            <button id="loginBtn" class="btn btn-outline-primary ms-3">התחברות</button>
+          </li>
+          <li class="nav-item d-none" id="adminMenu">
+            <a class="nav-link" href="admin.html">אדמין פאנל</a>
+          </li>
+          <li class="nav-item d-none" id="commandMenu">
+            <a class="nav-link" href="command.html">מידע לפיקוד</a>
+          </li>
+          <li class="nav-item d-none" id="logoutMenu">
+            <button id="logoutBtn" class="btn btn-outline-danger ms-3">התנתק</button>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
+
+  <!-- Modal להתחברות -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-white border border-primary">
+        <div class="modal-header border-primary">
+          <h5 class="modal-title" id="loginModalLabel">התחברות למערכת</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="username" class="form-label">שם משתמש</label>
+              <input type="text" class="form-control bg-dark text-white border-secondary" id="username" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">סיסמה</label>
+              <input type="password" class="form-control bg-dark text-white border-secondary" id="password" required>
+            </div>
+            <div class="text-danger small" id="loginError"></div>
+          </form>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">סגור</button>
+          <button type="submit" form="loginForm" class="btn btn-primary">התחבר</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Hero with Carousel -->
   <section id="home" class="hero position-relative overflow-hidden">
@@ -103,14 +144,120 @@
     </div>
   </section>
 
+  <!-- טופס תלונה אנונימית -->
+  <section class="py-5 bg-dark-transparent">
+    <div class="container" style="max-width: 800px;">
+      <h2 class="text-center mb-4 text-primary">הגשת תלונה אנונימית</h2>
+      <form id="complaintForm" class="p-4 rounded-4 bg-dark border border-secondary">
+        <div class="mb-3">
+          <label for="commanderName" class="form-label">שם המפקד</label>
+          <input type="text" class="form-control bg-secondary text-white" id="commanderName" required>
+        </div>
+        <div class="mb-3">
+          <label for="badgeNumber" class="form-label">מספר תג</label>
+          <input type="text" class="form-control bg-secondary text-white" id="badgeNumber" required>
+        </div>
+        <div class="mb-3">
+          <label for="subject" class="form-label">נושא התלונה</label>
+          <input type="text" class="form-control bg-secondary text-white" id="subject" required>
+        </div>
+        <div class="mb-3">
+          <label for="content" class="form-label">תוכן התלונה</label>
+          <textarea class="form-control bg-secondary text-white" id="content" rows="6" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-danger w-100">שלח תלונה אנונימית</button>
+      </form>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="bg-dark text-white text-center py-4">
     <div class="container">
       <img src="gen.png" alt="RV-RP" width="60" class="mb-3 rounded-circle">
       <p class="mb-1">© 2025–2026 | האתר נבנה על ידי tomcupcake</p>
+      <p class="text-muted small">Los Santos Police Department – Roleplay Server</p>
     </div>
   </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const ADMIN_USERNAME = "Artzy";
+  const ADMIN_PASSWORD = "gili1&Dori2";
+
+  let users = JSON.parse(localStorage.getItem("lspd_users")) || {};
+  
+  // יצירה מחדש של משתמש אדמין אם חסר (זה חשוב!)
+  if (!users[ADMIN_USERNAME]) {
+    users[ADMIN_USERNAME] = {
+      password: ADMIN_PASSWORD,
+      isAdmin: true
+    };
+    localStorage.setItem("lspd_users", JSON.stringify(users));
+    console.log("נוצר משתמש אדמין חדש אוטומטית");
+  }
+
+  // פתיחת מודאל
+  document.getElementById("loginBtn")?.addEventListener("click", () => {
+    new bootstrap.Modal(document.getElementById("loginModal")).show();
+  });
+
+  // טופס התחברות
+  document.getElementById("loginForm")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("username")?.value.trim();
+    const password = document.getElementById("password")?.value;
+    const error = document.getElementById("loginError");
+
+    if (!username || !password) {
+      error.textContent = "מלא שם משתמש וסיסמה";
+      return;
+    }
+
+    if (users[username] && users[username].password === password) {
+      localStorage.setItem("lspd_loggedIn", "true");
+      localStorage.setItem("lspd_currentUser", username);
+      
+      // עדכון נראות
+      document.getElementById("loginBtn")?.classList.add("d-none");
+      document.getElementById("logoutMenu")?.classList.remove("d-none");
+      document.getElementById("commandMenu")?.classList.remove("d-none");
+      
+      if (users[username].isAdmin) {
+        document.getElementById("adminMenu")?.classList.remove("d-none");
+      }
+
+      bootstrap.Modal.getInstance(document.getElementById("loginModal"))?.hide();
+      error.textContent = "";
+      console.log("התחברות הצליחה →", username);
+      alert("התחברת! (עכשיו רענן ותראה אם נשאר מחובר)");
+    } else {
+      error.textContent = "שם משתמש או סיסמה לא נכונים";
+      console.log("ניסיון כושל:", {username, password});
+    }
+  });
+
+  // התנתקות
+  document.getElementById("logoutBtn")?.addEventListener("click", () => {
+    localStorage.removeItem("lspd_loggedIn");
+    localStorage.removeItem("lspd_currentUser");
+    location.reload();
+  });
+
+  // בדיקה ראשונית – עדכון מצב navbar
+  if (localStorage.getItem("lspd_loggedIn") === "true") {
+    const user = localStorage.getItem("lspd_currentUser");
+    document.getElementById("loginBtn")?.classList.add("d-none");
+    document.getElementById("logoutMenu")?.classList.remove("d-none");
+    document.getElementById("commandMenu")?.classList.remove("d-none");
+    if (users[user]?.isAdmin) {
+      document.getElementById("adminMenu")?.classList.remove("d-none");
+    }
+  }
+
+});
+</script>
 </body>
 </html>
